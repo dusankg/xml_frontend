@@ -17,12 +17,13 @@
   }
 </style>
 <header>
-  <button class="button-head">HOME</button>
-  <button class="button-head">BASKET</button>
+  <button class="button-head" (click)="goHome()">HOME</button>
+  <button class="button-head" (click)="goBasket()">BASKET</button>
   <button class="button-head">MY PROFILE</button>
+  <button class="button-head" (click)="goAddCar()">PLACE AD</button>
   <span style="float:right;">
       <button class="button-head">REGISTER</button>
-      <button class="button-head">LOGIN</button>
+      <button class="button-head" (click)="goLogin()">LOGIN</button>
       <button class="button-head" (click)="logout()">Log out</button>
 
     </span>

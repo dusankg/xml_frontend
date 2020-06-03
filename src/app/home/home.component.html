@@ -1,13 +1,95 @@
-<table align="center">
+<style>
+  .table-main {
+    border-collapse: collapse;
+    width: 70%;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  .btn-search{
+    background: white;
+    color: #4CAF50;
+    border: none;
+  }
+  .btn-search:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
 
-  <table style="width:100%">
-    <table border = 1 >
+  .btn-add{
+    background: white;
+    color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+  }
+  .btn-add:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+<br/>
+<div align="center" >
+  <img src="assets/logo.png" alt="Logo" width="300" height="300" >
+</div>
+<br/><br/>
+
+<div align="center">
+
+  <table align="center">
+    <tr>
+      <th>
+      <input type="text" placeholder="Model" id="model">
+      </th>
+
+      <th>
+        <select id="fuel" >
+          <option value="fuel">Fuel</option>
+          <option value="petrol">Petrol</option>
+          <option value="diesel">Diesel</option>
+          <option value="LPG">LPG</option>
+        </select>
+      </th>
+
+      <th>
+        <select id="Doors" >
+          <option value="doors">Doors</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </th>
+
+      <th>
+        <input type="number" placeholder="Price" id="price">
+      </th>
+
+      <th>
+        <button class="btn-search" id="btn-search" >
+          SEARCH
+        </button>
+      </th>
+    </tr>
+  </table>
+  <div>
+
+
+</div>
+<br/>
+
+<div align="center">
+
+
+    <table class="table-main" align="center">
       <tr>
       <tr bgcolor = green >
         <th>Model</th>
         <th>User</th>
         <th>Fuel</th>
         <th>Doors</th>
+        <th>Price</th>
         <th>Add to basket</th>
 
       </tr>
@@ -15,8 +97,22 @@
         <td>Add info</td>
         <td>Add info</td>
         <td>Add info</td>
-        <th>Add info</th>
-        <th><button style="background:#4CAF50">Add</button></th>
+        <td>Add info</td>
+        <td>Add info</td>
+        <th><button class="btn-add">Add</button></th>
       </tr>
 
+      <tr *ngFor="let car of cars" >
+        <td>{{car.carModel}}</td>
+        <td>Add info</td>
+        <td>{{car.carModel}}</td>
+        <td>{{car.carModel}}</td>
+        <td>{{car.carModel}}</td>
+        <th><button class="btn-add">Add</button></th>
+      </tr>
+
+
     </table>
+
+
+</div>

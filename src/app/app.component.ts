@@ -19,5 +19,17 @@ export class AppComponent implements OnInit{
     localStorage.clear();
     this.router.navigate(['home']);
   }
+  goHome(){
+    this.router.navigate(['home']);
+  }
+  goBasket(){
+    this.router.navigate(['basket']);
+  }
+  goAddCar(){
+    this.router.navigate(['add-car']);
+  }
+  goLogin(){
+    this.router.navigate(['login']);
+  }
 
 }

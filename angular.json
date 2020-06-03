@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "xml-frontend"
+    }
+  },
+  "defaultProject": "xml-frontend",
+  "cli": {
+    "analytics": false
+  }
 }

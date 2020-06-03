@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../login/login.service';
+import {BasketService} from '../basket/basket.service';
 import {Router} from '@angular/router';
+import {CarDTO} from '../model/CarDTO';
 
 @Component({
   selector: 'app-home',
@@ -8,28 +10,30 @@ import {Router} from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  secretString: string;
+  cars: Set<CarDTO>;
+  selectedCar: CarDTO;
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private basketService: BasketService, private router: Router) { }
 
   ngOnInit(): void {
-  }
-
-  // poziva metodu u login servisu jer me mrzelo da pravim novi servis!!
-  getString() {
-    this.loginService.getSecretString()
-      .subscribe(
-        response => {
-          this.secretString = response;
-        },
-        err => {
-          alert('You must log in');
-        });
+    this.selectedCar = new CarDTO();
+    this.selectedCar.carModel = 'Dusan';
+    this.cars = new Set<CarDTO>();
+    this.cars.add(this.selectedCar);
+    console.log(this.cars)
   }
 
   logout() {
     localStorage.clear();
     this.router.navigate(['login']);
+  }
+
+  getAllCars(){
+
+  }
+
+  getCarsBySearch(){
+
   }
 
 
