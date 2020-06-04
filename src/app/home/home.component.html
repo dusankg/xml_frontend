@@ -34,52 +34,64 @@
   <img src="assets/logo.png" alt="Logo" width="300" height="300" >
 </div>
 <br/><br/>
+<div id="search-form" align="center">
+  <form (ngSubmit)="getCarsBySearch()">
+    <div class="form-group">
+    <table align="center">
+      <tr>
+        <th>City</th>
+        <th>Starting date</th>
+        <th>Ending date</th>
+        <th>Fuel</th>
+        <th>Price</th>
+      </tr>
+      <tr>
+        <th>
+        <input type="text" placeholder="City" id="city" [(ngModel)]="selectedCity" class="form-control" [ngModelOptions]="{standalone: true}">
+        </th>
 
-<div align="center">
-
-  <table align="center">
-    <tr>
-      <th>
-      <input type="text" placeholder="Model" id="model">
-      </th>
-
-      <th>
-        <select id="fuel" >
-          <option value="fuel">Fuel</option>
-          <option value="petrol">Petrol</option>
-          <option value="diesel">Diesel</option>
-          <option value="LPG">LPG</option>
-        </select>
-      </th>
-
-      <th>
-        <select id="Doors" >
-          <option value="doors">Doors</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </th>
-
-      <th>
-        <input type="number" placeholder="Price" id="price">
-      </th>
-
-      <th>
-        <button class="btn-search" id="btn-search" >
-          SEARCH
-        </button>
-      </th>
-    </tr>
-  </table>
-  <div>
+        <th>
+        <input type="date" id="startingDate" class="form-control"required
+               [(ngModel)]="selectedStartingDate"
+               [ngModelOptions]="{standalone: true}"
+               ng-model="ddd"
 
 
-</div>
+        />
+        </th>
+        <th>
+        <input type="date" id="endingDate" class="form-control" required
+               [(ngModel)]="selectedEndingDate"
+               [ngModelOptions]="{standalone: true}"
+               ng-model="ddd"
+        />
+        </th>
+
+        <th>
+          <select id="fuel" [(ngModel)]="selectedFuel" class="form-control" [ngModelOptions]="{standalone: true}">
+            <option value="petrol">Petrol</option>
+            <option value="diesel">Diesel</option>
+            <option value="lpg">LPG</option>
+          </select>
+        </th>
+
+        <th>
+          <input type="number" placeholder="Price" id="price" [(ngModel)]="selectedPrice" class="form-control" [ngModelOptions]="{standalone: true}">
+        </th>
+
+        <th>
+          <button class="btn-search" id="btn-search"  type="submit">
+            SEARCH
+          </button>
+        </th>
+      </tr>
+    </table>
+    </div>
+  </form>
 <br/>
-
-<div align="center">
+<br/>
+</div>
+<div id="table-cars" align="center">
 
 
     <table class="table-main" align="center">
@@ -90,6 +102,7 @@
         <th>Fuel</th>
         <th>Doors</th>
         <th>Price</th>
+        <th>More info</th>
         <th>Add to basket</th>
 
       </tr>
@@ -99,6 +112,7 @@
         <td>Add info</td>
         <td>Add info</td>
         <td>Add info</td>
+        <th><button class="btn-add">More info</button></th>
         <th><button class="btn-add">Add</button></th>
       </tr>
 
@@ -108,7 +122,8 @@
         <td>{{car.carModel}}</td>
         <td>{{car.carModel}}</td>
         <td>{{car.carModel}}</td>
-        <th><button class="btn-add">Add</button></th>
+        <th><button class="btn-add" (click)="moreInfo(car.id)">More info</button></th>
+        <th><button class="btn-add" (click)="addToBasket(car.id)">Add</button></th>
       </tr>
 
 

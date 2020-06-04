@@ -1,10 +1,8 @@
 <div style="width: 90%" align="center">
-  <h1>Add new car</h1>
+  <h1>Ad details</h1>
   <br>
-  <form (ngSubmit)="onSubmitCreate()" >
-
     <div class="form-group" style="margin-bottom: 5px">
-      <b style="color:#33ccbb">Select gas type </b>
+      <b style="color:#33ccbb">Selected gas type </b>
       <select class="form-control" id="gasType">
         <option value="Gas">Gas</option>
         <option value="Oil">Diesel</option>
@@ -12,68 +10,76 @@
       </select>
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Type </b>
       <input type="text" id="carType" class="form-control" placeholder="Input car type" required
              [(ngModel)]="carType"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Model </b>
       <input type="text" id="carModel" class="form-control" placeholder="Input car model" required
              [(ngModel)]="carModel"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Transmission </b>
       <input type="text" id="transmissionType" class="form-control" placeholder="Input transmission type" required
              [(ngModel)]="transmissionType"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Class </b>
       <input type="text" id="carClass" class="form-control" placeholder="Input car class" required
              [(ngModel)]="carClass"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Lower price </b>
       <input type="number" id="lowerPrice" class="form-control" placeholder="Input lower price" required
              [(ngModel)]="lowerPrice"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Upper price </b>
       <input type="number" id="upperPrice" class="form-control" placeholder="Input upper price" required
              [(ngModel)]="upperPrice"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Km amount </b>
       <input type="number" id="kmAmount" class="form-control" placeholder="Input km amount" required
              [(ngModel)]="kmAmount"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Km plan amount </b>
       <input type="number" id="kmPlanAmount" class="form-control" placeholder="Input km plan amount" required
              [(ngModel)]="kmPlanAmount"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <b style="color:#33ccbb">Select cdw </b>
+      <b style="color:#33ccbb">Cdw </b>
       <input type="checkbox" id="cdw" class="form-control" required
              [(ngModel)]="cdw"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
+      <b style="color:#33ccbb">Kids seats </b>
       <input type="number" id="kidsSeats" class="form-control" placeholder="Input kids seats" required
              [(ngModel)]="kidsSeats"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
-    <div class="form-group" style="margin-top: 20px">
-      <button class="btn btn-success" type="submit">Create</button>
-    </div>
-  </form>
+
+
 </div>
+

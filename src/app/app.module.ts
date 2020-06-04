@@ -14,6 +14,14 @@ import {Interceptor} from './interceptor/Interceptor';
 import { AddCarComponent } from './add-car/add-car.component';
 import { BasketComponent } from './basket/basket.component';
 import { BasketService } from './basket/basket.service';
+import { HomeService } from './home/home.service';
+import { AdMoreInfoComponent } from './ad-more-info/ad-more-info.component';
+import { AdMoreInfoService } from './ad-more-info/ad-more-info.service';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyProfileService} from './my-profile/my-profile.service';
+import { AdminComponent } from './admin/admin.component';
+import { AdminService } from './admin/admin.service';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +30,9 @@ import { BasketService } from './basket/basket.service';
     LoginComponent,
     AddCarComponent,
     BasketComponent,
+    AdMoreInfoComponent,
+    MyProfileComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +40,7 @@ import { BasketService } from './basket/basket.service';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [ LoginService, AddCarService, BasketService,
+  providers: [ LoginService, AddCarService, BasketService, HomeService, AdMoreInfoService, MyProfileService, AdminService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

@@ -1,0 +1,101 @@
+
+<style>
+  .table-main {
+    border-collapse: collapse;
+    width: 70%;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  .btn-delete{
+    background: white;
+    color: red;
+    border: none;
+  }
+  .btn-delete:hover {
+    background-color: red;
+    color: white;
+  }
+
+  .btn-add{
+    background: white;
+    color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+  }
+  .btn-add:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+<br/>
+<br/><br/>
+
+<div id="datesDiv">
+  <table align="center">
+    <tr>
+      <th>Starting date</th>
+      <th>Ending date</th>
+    </tr>
+    <tr>
+      <th>
+        <input type="date" id="startingDate" class="form-control"required
+               [(ngModel)]="selectedStartingDate"
+               [ngModelOptions]="{standalone: true}"
+               ng-model="ddd"
+
+
+        />
+      </th>
+      <th>
+        <input type="date" id="endingDate" class="form-control" required
+               [(ngModel)]="selectedEndingDate"
+               [ngModelOptions]="{standalone: true}"
+               ng-model="ddd"
+        />
+      </th>
+
+    </tr>
+  </table>
+</div>
+<br/>
+<div id="table-cars" align="center">
+
+
+  <table class="table-main" align="center">
+    <tr>
+    <tr bgcolor = green >
+      <th>Model</th>
+      <th>User</th>
+      <th>Fuel</th>
+      <th>Doors</th>
+      <th>Price</th>
+      <th>Add occupation</th>
+      <th>Delete</th>
+
+    </tr>
+    <tr>
+      <td>Add info</td>
+      <td>Add info</td>
+      <td>Add info</td>
+      <td>Add info</td>
+      <td>Add info</td>
+      <th><button class="btn-add" (click)="addOccupation(156)">Add occupation</button></th>
+      <th><button class="btn-delete" >Delete</button></th>
+    </tr>
+
+    <tr *ngFor="let car of cars" >
+      <td>{{car.carModel}}</td>
+      <td>Add info</td>
+      <td>{{car.carModel}}</td>
+      <td>{{car.carModel}}</td>
+      <td>{{car.carModel}}</td>
+      <th><button class="btn-add" (click)="addOccupation(car.id)">Add</button></th>
+      <th><button class="btn-delete" (click)="deleteCar(car.id)">Delete</button></th>
+    </tr>
+
+
+  </table>
+</div>

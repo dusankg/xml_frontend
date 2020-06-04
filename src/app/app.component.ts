@@ -31,5 +31,11 @@ export class AppComponent implements OnInit{
   goLogin(){
     this.router.navigate(['login']);
   }
+  goMyPage(){
+    this.router.navigate(['my-profile']);
+  }
+  goAdminPage(){
+    this.router.navigate(['admin']);
+  }
 
 }

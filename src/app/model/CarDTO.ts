@@ -10,5 +10,5 @@ export class CarDTO {
   kmAmount : number;
   kmPlanAmount : number;
   kidsSeats : number;
-  cdw : Boolean;
+  cdw : boolean;
   }

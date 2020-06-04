@@ -1,0 +1,81 @@
+
+<style>
+  .table-main {
+    border-collapse: collapse;
+    width: 70%;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  .btn-delete{
+    background: white;
+    color: red;
+    border: none;
+  }
+  .btn-delete:hover {
+    background-color: red;
+    color: white;
+  }
+
+  .btn-block{
+    background: white;
+    color: orange;
+    border: none;
+  }
+  .btn-block:hover {
+    background-color: orange;
+    color: white;
+  }
+
+  .btn-add{
+    background: white;
+    color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+  }
+  .btn-add:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+<br/>
+<br/><br/>
+
+<br/>
+<div id="table-cars" align="center">
+
+
+  <table class="table-main" align="center">
+    <tr>
+    <tr bgcolor = green >
+      <th>Name</th>
+      <th>Surname</th>
+      <th>jmbg</th>
+      <th>Block</th>
+      <th>Activate</th>
+      <th>Delete</th>
+
+    </tr>
+    <tr>
+      <td>Add info</td>
+      <td>Add info</td>
+      <td>Add info</td>
+      <th><button class="btn-block" >Block</button></th>
+      <th><button class="btn-add">Activate</button></th>
+      <th><button class="btn-delete">Delete</button></th>
+    </tr>
+
+    <tr *ngFor="let user of users" >
+      <td>{{user.name}}</td>
+      <td>{{user.surname}}</td>
+      <td>{{user.jmbg}}</td>
+      <th><button class="btn-block" (click)="blockUser(user.id)">Add</button></th>
+      <th><button class="btn-add" (click)="activateUser(user.id)">Add</button></th>
+      <th><button class="btn-delete" (click)="deleteUser(user.id)">Delete</button></th>
+    </tr>
+
+
+  </table>
+</div>
