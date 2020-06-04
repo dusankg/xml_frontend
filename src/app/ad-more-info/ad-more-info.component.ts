@@ -24,11 +24,13 @@ export class AdMoreInfoComponent implements OnInit {
   kidsSeats: number;
   private routeSub: Subscription;
   carId: number;
+  public base64Images: Set<string>;
 
   constructor(private route: ActivatedRoute, private  adMoreInfoService: AdMoreInfoService) {
     this.carDTO = new CarDTO();
     this.cdw = true;
     this.carModel = 'Dusan';
+    this.base64Images = new Set<string>();
   }
 
   ngOnInit(): void {

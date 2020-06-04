@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CarDTO} from '../model/CarDTO';
 import { AddCarService } from './addCar.service';
 import {Router} from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-car',
@@ -21,8 +22,14 @@ export class AddCarComponent implements OnInit {
   cdw: boolean;
   kidsSeats: number;
 
-  constructor(private service: AddCarService, private  router: Router) {
+  public brojac: number;
+  public base64Image: string;
+  public base64Images: Set<string>;
+
+  constructor(private service: AddCarService, private  router: Router, private domSanitizer: DomSanitizer) {
     this.carDTO = new CarDTO();
+    this.brojac = 0;
+    this.base64Images = new Set<string>();
   }
 
   ngOnInit(): void {
@@ -34,7 +41,6 @@ export class AddCarComponent implements OnInit {
   }
 
   onSubmitCreate() {
-
     /*this.service.createCertificate(this.subjectData, CurValue, alias, tempate).subscribe(result => {
       alert('Successfully');
       location.reload();
@@ -57,6 +63,26 @@ export class AddCarComponent implements OnInit {
       alert('Successfully');
       this.router.navigate(['home']);
     });
+  }
+
+  changeListener($event): void {
+    this.readThis($event.target);
+  }
+
+  readThis(inputValue: any): void {
+    var file: File = inputValue.files[0];
+    var myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.base64Image = myReader.result as string;
+      this.base64Images.add(myReader.result as string);
+    }
+    myReader.readAsDataURL(file);
+
+  }
+
+  removeImage(imageName: string){
+    this.base64Images.delete(imageName);
   }
 
 }
