@@ -68,7 +68,7 @@ export class AddCarComponent implements OnInit {
     this.carDTO.childSeat = this.child_seat;
 
     this.carDTO.fuelType = e.value;
-
+    this.carDTO.images = Array.from(this.base64Images);
     this.service.createCar(this.carDTO).subscribe(result => {
       alert('Successfully');
       this.router.navigate(['home']);
@@ -86,7 +86,7 @@ export class AddCarComponent implements OnInit {
     myReader.onloadend = (e) => {
       this.base64Image = myReader.result as string;
       this.base64Images.add(myReader.result as string);
-      this.carDTO.images.push(myReader.result as string);
+      //this.carDTO.images.push(myReader.result as string);
     }
     myReader.readAsDataURL(file);
 
