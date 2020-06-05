@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   title = 'frontend-agent';
-  email: string;
+  username: string;
   password: string;
   show = false;
 

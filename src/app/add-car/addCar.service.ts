@@ -1,19 +1,24 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import { CarDTO } from '../model/CarDTO';
+import { VehicleDTO } from '../model/VehicleDTO';
 
 
 @Injectable()
 export class AddCarService {
-  carCreateUrl : string;
+  carCreateUrl: string;
 
   constructor(private http: HttpClient) {
-    this.carCreateUrl = 'https://localhost:8080/car/create';
+    this.carCreateUrl = 'http://localhost:8083/vehicle/create';
   }
 
 
-  public createCar(carDTO: CarDTO): Observable<any>{
-    return this.http.post<any>(this.carCreateUrl , carDTO);
+  public createCar(vehicleDTO: VehicleDTO): Observable<any>{
+    console.log(vehicleDTO.images.length);
+    //console.log(vehicleDTO.fuelType);
+    //vehicleDTO.images = null;
+    return this.http.post<any>(this.carCreateUrl, vehicleDTO);
   }
+
+
 }

@@ -15,7 +15,7 @@
   <form (ngSubmit)="onSubmitCreate()" >
 
     <div class="form-group" style="margin-bottom: 5px">
-      <b style="color:#33ccbb">Select gas type </b>
+      <b style="color:#33ccbb">Select fuel type </b>
       <select class="form-control" id="gasType">
         <option value="Gas">Gas</option>
         <option value="Oil">Diesel</option>
@@ -23,63 +23,100 @@
       </select>
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="text" id="carType" class="form-control" placeholder="Input car type" required
-             [(ngModel)]="carType"
+      <input type="text" id="brand" class="form-control" placeholder="Input car brand" required
+             [(ngModel)]="brand"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
       <input type="text" id="carModel" class="form-control" placeholder="Input car model" required
-             [(ngModel)]="carModel"
+             [(ngModel)]="model"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
       <input type="text" id="transmissionType" class="form-control" placeholder="Input transmission type" required
-             [(ngModel)]="transmissionType"
+             [(ngModel)]="transmission"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="text" id="carClass" class="form-control" placeholder="Input car class" required
-             [(ngModel)]="carClass"
+      <input type="text" id="vehicle_class" class="form-control" placeholder="Input vehicle class" required
+             [(ngModel)]="vehicle_class"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="number" id="lowerPrice" class="form-control" placeholder="Input lower price" required
-             [(ngModel)]="lowerPrice"
+      <input type="number" id="price" class="form-control" placeholder="Input price" required
+             [(ngModel)]="price"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="number" id="upperPrice" class="form-control" placeholder="Input upper price" required
-             [(ngModel)]="upperPrice"
+      <input type="number" id="mileage" class="form-control" placeholder="Input mileage" required
+             [(ngModel)]="mileage"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="number" id="kmAmount" class="form-control" placeholder="Input km amount" required
-             [(ngModel)]="kmAmount"
+      <input type="text" id="companyUsername" class="form-control" placeholder="Input company username" required
+             [(ngModel)]="companyUsername"
+             [ngModelOptions]="{standalone: true}"
+      />
+    </div>
+
+    <div id="datesDiv">
+      <table align="center">
+        <tr>
+          <th>Starting date</th>
+          <th>Ending date</th>
+        </tr>
+        <tr>
+          <th>
+            <input type="date" id="startDate" class="form-control"required
+                   [(ngModel)]="startDate"
+                   [ngModelOptions]="{standalone: true}"
+                   ng-model="ddd"
+
+
+            />
+          </th>
+          <th>
+            <input type="date" id="endDate" class="form-control" required
+                   [(ngModel)]="endDate"
+                   [ngModelOptions]="{standalone: true}"
+                   ng-model="ddd"
+            />
+          </th>
+
+        </tr>
+      </table>
+    </div>
+
+
+    <div class="form-group" style="margin-bottom: 5px">
+      <input type="number" id="allowed_mileage" class="form-control" placeholder="Input allowed mileage" required
+             [(ngModel)]="allowed_mileage"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="number" id="kmPlanAmount" class="form-control" placeholder="Input km plan amount" required
-             [(ngModel)]="kmPlanAmount"
+      <b style="color:#33ccbb">Collision damage waiver </b>
+      <input type="checkbox" id="collision_damage_waiver" class="form-control" required
+             [(ngModel)]="collision_damage_waiver"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <b style="color:#33ccbb">Select cdw </b>
-      <input type="checkbox" id="cdw" class="form-control" required
-             [(ngModel)]="cdw"
+      <b style="color:#33ccbb">Limited rent mileage </b>
+      <input type="checkbox" id="limited_rent_mileage" class="form-control" required
+             [(ngModel)]="limited_rent_mileage"
              [ngModelOptions]="{standalone: true}"
       />
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="number" id="kidsSeats" class="form-control" placeholder="Input kids seats" required
-             [(ngModel)]="kidsSeats"
+      <input type="number" id="child_seat" class="form-control" placeholder="Input child seats" required
+             [(ngModel)]="child_seat"
              [ngModelOptions]="{standalone: true}"
       />
     </div>

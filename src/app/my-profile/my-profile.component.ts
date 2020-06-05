@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CarDTO} from '../model/CarDTO';
+import {VehicleDTO} from '../model/VehicleDTO';
 import {MyProfileService} from '../my-profile/my-profile.service';
 @Component({
   selector: 'app-my-profile',
@@ -8,7 +8,7 @@ import {MyProfileService} from '../my-profile/my-profile.service';
 })
 export class MyProfileComponent implements OnInit {
 
-  cars: Set<CarDTO>;
+  cars: Set<VehicleDTO>;
   selectedStartingDate: Date;
   selectedEndingDate: Date;
 

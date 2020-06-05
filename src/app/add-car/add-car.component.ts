@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CarDTO} from '../model/CarDTO';
+import {VehicleDTO} from '../model/VehicleDTO';
 import { AddCarService } from './addCar.service';
 import {Router} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,24 +10,29 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./add-car.component.css']
 })
 export class AddCarComponent implements OnInit {
-  carDTO: CarDTO;
-  carType: string;
-  carModel: string;
-  carClass: string;
-  lowerPrice: number;
-  upperPrice: number;
-  transmissionType: string;
-  kmPlanAmount: number;
-  kmAmount: number;
-  cdw: boolean;
-  kidsSeats: number;
+  carDTO: VehicleDTO;
+  brand: string;
+  model: string;
+  fuel_type : string;
+  transmission: string;
+  vehicle_class : string;
+  price : number;
+  mileage : number;
+  companyUsername : string;
+  startDate : Date;
+  endDate : Date;
+  limited_rent_mileage : boolean;
+  allowed_mileage : number;
+  collision_damage_waiver: boolean;
+  child_seat: number;
 
   public brojac: number;
   public base64Image: string;
   public base64Images: Set<string>;
 
   constructor(private service: AddCarService, private  router: Router, private domSanitizer: DomSanitizer) {
-    this.carDTO = new CarDTO();
+    this.carDTO = new VehicleDTO();
+    this.carDTO.images = new Array<string>();
     this.brojac = 0;
     this.base64Images = new Set<string>();
   }
@@ -46,18 +51,23 @@ export class AddCarComponent implements OnInit {
       location.reload();
     });*/
     const e = (document.getElementById('gasType')) as HTMLSelectElement;
-    console.log(this.carModel);
-    this.carDTO.carModel = this.carModel;
-    this.carDTO.carClass = this.carClass;
-    this.carDTO.carType = this.carType;
-    this.carDTO.transmissionType = this.transmissionType;
-    this.carDTO.lowerPrice = this.lowerPrice;
-    this.carDTO.upperPrice = this.upperPrice;
-    this.carDTO.kmAmount = this.kmAmount;
-    this.carDTO.kmPlanAmount = this.kmPlanAmount;
-    this.carDTO.cdw = this.cdw;
-    this.carDTO.kidsSeats = this.kidsSeats;
-    this.carDTO.gasType = e.value;
+
+    this.carDTO.brand = this.brand;
+    this.carDTO.model = this.model;
+    this.carDTO.fuelType = this.fuel_type;
+    this.carDTO.transmission = this.transmission;
+    this.carDTO.vehicleClass = this.vehicle_class;
+    this.carDTO.price = this.price;
+    this.carDTO.mileage = this.mileage;
+    this.carDTO.companyUsername = this.companyUsername;
+    this.carDTO.startDate = this.startDate;
+    this.carDTO.endDate = this.endDate;
+    this.carDTO.limitedRentMileage = this.limited_rent_mileage;
+    this.carDTO.allowedMileage = this.allowed_mileage;
+    this.carDTO.collisionDamageWaiver = this.collision_damage_waiver;
+    this.carDTO.childSeat = this.child_seat;
+
+    this.carDTO.fuelType = e.value;
 
     this.service.createCar(this.carDTO).subscribe(result => {
       alert('Successfully');
@@ -76,6 +86,7 @@ export class AddCarComponent implements OnInit {
     myReader.onloadend = (e) => {
       this.base64Image = myReader.result as string;
       this.base64Images.add(myReader.result as string);
+      this.carDTO.images.push(myReader.result as string);
     }
     myReader.readAsDataURL(file);
 
@@ -83,6 +94,7 @@ export class AddCarComponent implements OnInit {
 
   removeImage(imageName: string){
     this.base64Images.delete(imageName);
+    //this.carDTO.images.delete(imageName);
   }
 
 }

@@ -6,17 +6,20 @@ import {jitOnlyGuardedExpression} from '@angular/compiler/src/render3/util';
 @Injectable()
 export class AdMoreInfoService {
   private readonly userUrl: string;
+  private readonly findByIdUrl: string;
 
   constructor(private http: HttpClient) {
-    this.userUrl = 'https://localhost:8080/users/login';
+    this.userUrl = 'http://localhost:8080/users/login';
+    this.findByIdUrl = 'http://localhost:8083/vehicleDetails';
   }
 
   public getUser(password: string): Observable<any> {
     return this.http.post<any>(this.userUrl, {password});
   }
 
-  public findCarsBySearch(city: string, fuel: string, seats: number, price: number){
-    console.log('Pretraga za model: ' + city + fuel + seats + price);
+  public getById(id: number): Observable<any>{
+    console.log(this.findByIdUrl + '/' + id)
+    return this.http.get<any>(this.findByIdUrl + '/' + id);
   }
 
   public getCarFromId(id: number){

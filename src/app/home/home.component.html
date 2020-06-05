@@ -42,17 +42,15 @@
         <th>City</th>
         <th>Starting date</th>
         <th>Ending date</th>
-        <th>Fuel</th>
-        <th>Price</th>
       </tr>
       <tr>
         <th>
-        <input type="text" placeholder="City" id="city" [(ngModel)]="selectedCity" class="form-control" [ngModelOptions]="{standalone: true}">
+        <input type="text" placeholder="City" id="city" [(ngModel)]="selectedPlace" class="form-control" [ngModelOptions]="{standalone: true}">
         </th>
 
         <th>
         <input type="date" id="startingDate" class="form-control"required
-               [(ngModel)]="selectedStartingDate"
+               [(ngModel)]="selectedStartDate"
                [ngModelOptions]="{standalone: true}"
                ng-model="ddd"
 
@@ -61,22 +59,10 @@
         </th>
         <th>
         <input type="date" id="endingDate" class="form-control" required
-               [(ngModel)]="selectedEndingDate"
+               [(ngModel)]="selectedEndDate"
                [ngModelOptions]="{standalone: true}"
                ng-model="ddd"
         />
-        </th>
-
-        <th>
-          <select id="fuel" [(ngModel)]="selectedFuel" class="form-control" [ngModelOptions]="{standalone: true}">
-            <option value="petrol">Petrol</option>
-            <option value="diesel">Diesel</option>
-            <option value="lpg">LPG</option>
-          </select>
-        </th>
-
-        <th>
-          <input type="number" placeholder="Price" id="price" [(ngModel)]="selectedPrice" class="form-control" [ngModelOptions]="{standalone: true}">
         </th>
 
         <th>
@@ -98,30 +84,17 @@
       <tr>
       <tr bgcolor = green >
         <th>Model</th>
-        <th>User</th>
-        <th>Fuel</th>
-        <th>Doors</th>
+        <th>Brand</th>
         <th>Price</th>
         <th>More info</th>
         <th>Add to basket</th>
 
       </tr>
-      <tr>
-        <td>Add info</td>
-        <td>Add info</td>
-        <td>Add info</td>
-        <td>Add info</td>
-        <td>Add info</td>
-        <th><button class="btn-add">More info</button></th>
-        <th><button class="btn-add">Add</button></th>
-      </tr>
 
       <tr *ngFor="let car of cars" >
-        <td>{{car.carModel}}</td>
-        <td>Add info</td>
-        <td>{{car.carModel}}</td>
-        <td>{{car.carModel}}</td>
-        <td>{{car.carModel}}</td>
+        <td>{{car.model}}</td>
+        <td>{{car.brand}}</td>
+        <td>{{car.price}}</td>
         <th><button class="btn-add" (click)="moreInfo(car.id)">More info</button></th>
         <th><button class="btn-add" (click)="addToBasket(car.id)">Add</button></th>
       </tr>

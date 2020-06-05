@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import { CarDTO } from '../model/CarDTO';
+import { VehicleDTO } from '../model/VehicleDTO';
 import { CustomerDTO } from '../model/CustomerDTO';
 
 
@@ -14,7 +14,7 @@ export class MyProfileService {
   }
 
 
-  public createCar(carDTO: CarDTO): Observable<any>{
+  public createCar(carDTO: VehicleDTO): Observable<any>{
     return this.http.post<any>(this.carCreateUrl , carDTO);
   }
 
