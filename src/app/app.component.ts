@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    localStorage.clear();
   }
   logout() {
     localStorage.clear();
@@ -36,6 +37,33 @@ export class AppComponent implements OnInit{
   }
   goAdminPage(){
     this.router.navigate(['admin']);
+  }
+
+  get someoneLoggedIn(){
+    if (localStorage.getItem('jwt') === null){
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  get adminLoggedIn(){
+    if (localStorage.getItem('role') === 'ROLE_ADMIN'){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  get clientLoggedIn(){
+    if (localStorage.getItem('role') === 'ROLE_CLIENT'){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from './login.service';
 import {Router} from '@angular/router';
+import {HttpHeaders, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,26 +13,28 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   show = false;
-
   constructor(private loginService: LoginService, private  router: Router) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    this.loginService.getUser(this.password)
+    this.loginService.getUser(this.username, this.password)
       .subscribe(
-        response => {
-          localStorage.setItem('jwt', response.token);
-          localStorage.setItem('role', response.role);
+        (response: HttpResponse<any>) => {
+          // localStorage.setItem('jwt', response.token);
+          // localStorage.setItem('role', response.role);
+          const splitedAuth = response.headers.get('Authorization').split(' ');
+          localStorage.setItem('jwt', splitedAuth[1]);
+          localStorage.setItem('role', response.headers.get('Role'));
+          alert('Successful login');
           this.router.navigate(['home']);
-          alert('successful login ' + localStorage.getItem('role'));
           this.show = false;
         },
         err => {
           if (err.status === 400) {
             alert('Wrong password');
-          } else if (err.status === 406 || err.status === 403) {
+          } else if (err.status === 406 || err.status === 403 || err.status === 401) {
             alert('Wrong password');
           }
           else {
