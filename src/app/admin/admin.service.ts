@@ -31,24 +31,23 @@ export class AdminService {
 
 
   constructor(private http: HttpClient) {
-    this.userUrl = 'https://localhost:8080/users/login';
-    this.createBrandUrl = 'http://localhost:8082/brand/create';
-    this.createModelUrl = 'http://localhost:8082/model/create';
-    this.createFuelTypeUrl = 'http://localhost:8082/fueltype/create';
-    this.createTransmissionUrl = 'http://localhost:8082/transmission/create';
-    this.createClassUrl = 'http://localhost:8082/vehicleclass/create';
+    this.createBrandUrl = 'http://localhost:8079/admin-service/brand/';
+    this.createModelUrl = 'http://localhost:8079/admin-service/model/';
+    this.createFuelTypeUrl = 'http://localhost:8079/admin-service/fueltype/';
+    this.createTransmissionUrl = 'http://localhost:8079/admin-service/transmission/create';
+    this.createClassUrl = 'http://localhost:8079/admin-service/vehicleclass/create';
 
-    this.getAllBrandUrl = 'http://localhost:8082/brand/getall';
-    this.getAllModelUrl = 'http://localhost:8082/model/getall';
-    this.getAllFuelTypeUrl = 'http://localhost:8082/fueltype/getall';
-    this.getAllTransmissionUrl = 'http://localhost:8082/transmission/getall';
-    this.getAllClassUrl = 'http://localhost:8082/vehicleclass/getall';
+    this.getAllBrandUrl = 'http://localhost:8079/admin-service/brand/';
+    this.getAllModelUrl = 'http://localhost:8079/admin-service/model/';
+    this.getAllFuelTypeUrl = 'http://localhost:8079/admin-service/fueltype/';
+    this.getAllTransmissionUrl = 'http://localhost:8079/admin-service/transmission/';
+    this.getAllClassUrl = 'http://localhost:8079/admin-service/vehicleclass/';
 
-    this.deleteBrandUrl = 'http://localhost:8082/brand/delete';
-    this.deleteModelUrl = 'http://localhost:8082/model/delete';
-    this.deleteFuelTypeUrl = 'http://localhost:8082/fueltype/delete';
-    this.deleteTransmissionUrl = 'http://localhost:8082/transmission/delete';
-    this.deleteClassUrl = 'http://localhost:8082/vehicleclass/delete';
+    this.deleteBrandUrl = 'http://localhost:8079/admin-service/brand';
+    this.deleteModelUrl = 'http://localhost:8079/admin-service/model';
+    this.deleteFuelTypeUrl = 'http://localhost:8079/admin-service/fueltype';
+    this.deleteTransmissionUrl = 'http://localhost:8079/admin-service/transmission';
+    this.deleteClassUrl = 'http://localhost:8079/admin-service/vehicleclass';
 
   }
 
@@ -95,16 +94,16 @@ export class AdminService {
   }
 
   public deleteBrand(name: string){
-    return this.http.post(this.deleteBrandUrl + '/' + name, null);
+    return this.http.post(this.deleteBrandUrl + '/' + name + '/', null);
   }
   public deleteFuelType(name: string){
-    return this.http.post(this.deleteFuelTypeUrl+ '/' + name, null);
+    return this.http.post(this.deleteFuelTypeUrl + '/' + name + '/', null);
   }
   public deleteTransmission(name: string){
-    return this.http.post(this.deleteTransmissionUrl + '/' + name, null);
+    return this.http.post(this.deleteTransmissionUrl + '/' + name + '/', null);
   }
   public deleteClass(name: string){
-    return this.http.post(this.deleteClassUrl + '/' + name, null);
+    return this.http.post(this.deleteClassUrl + '/' + name + '/', null);
   }
   public deleteModel(name: string){
     return this.http.post(this.deleteModelUrl + '/' + name, null);
