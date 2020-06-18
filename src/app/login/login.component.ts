@@ -24,9 +24,10 @@ export class LoginComponent implements OnInit {
         (response: HttpResponse<any>) => {
           // localStorage.setItem('jwt', response.token);
           // localStorage.setItem('role', response.role);
+          const str = JSON.stringify(response.headers.get('Authorization'))
           const splitedAuth = response.headers.get('Authorization').split(' ');
-          localStorage.setItem('jwt', splitedAuth[1]);
-          localStorage.setItem('role', response.headers.get('Role'));
+          localStorage.setItem('jwt', str);
+          localStorage.setItem('role', JSON.stringify(response.headers.get('Role')));
           alert('Successful login');
           this.router.navigate(['home']);
           this.show = false;

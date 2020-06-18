@@ -73,6 +73,7 @@ export class AddCarComponent implements OnInit {
       alert('Successfully');
       this.router.navigate(['home']);
     });
+    location.reload();
   }
 
   changeListener($event): void {

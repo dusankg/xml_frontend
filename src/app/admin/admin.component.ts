@@ -102,7 +102,7 @@ export class AdminComponent implements OnInit {
   public deleteModel(name: string){
     this.adminService.deleteModel(name).subscribe();
     window.location.reload();
-  }
+    }
 
 
   public addNewBrand(){
