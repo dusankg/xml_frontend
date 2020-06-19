@@ -5,6 +5,8 @@ import {HomeService} from '../home/home.service';
 import {Router} from '@angular/router';
 import {VehicleDTO} from '../model/VehicleDTO';
 import {SearchDTO} from '../model/SearchDTO';
+import {CartItem} from '../model/CartItem';
+import {Occupation} from '../model/Occupation';
 
 @Component({
   selector: 'app-home',
@@ -18,12 +20,15 @@ export class HomeComponent implements OnInit {
   selectedPlace: string;
   selectedStartDate: Date;
   selectedEndDate: Date;
+  userName: string;
+  cartItem: CartItem;
 
   constructor(private loginService: LoginService, private basketService: BasketService, private  homeService: HomeService, private router: Router) { }
 
   ngOnInit(): void {
     this.selectedCar = new VehicleDTO();
     this.selectedSearchDTO = new SearchDTO();
+    this.cartItem = new CartItem();
     this.selectedCar.id = 156;
     this.selectedCar.model = 'Dusan';
     this.cars = new Set<VehicleDTO>();
@@ -49,8 +54,16 @@ export class HomeComponent implements OnInit {
     this.homeService.getAllCars().subscribe(response => this.cars = response);
   }
 
-  addToBasket(adId: number){
-    this.homeService.addToBasket(adId);
+  addToBasket(vehicleId: number, vehicle_name: string, price: number, company_username: string){
+    // pravljenje cart itema
+    this.cartItem.owner_username = company_username;
+    this.cartItem.price = price;
+    this.cartItem.vehicle_id = vehicleId;
+    this.cartItem.vehicle_name = vehicle_name;
+    this.cartItem.time_span = new Occupation();
+    this.cartItem.time_span.startDate = this.selectedStartDate;
+    this.cartItem.time_span.endDate = this.selectedEndDate;
+    this.homeService.addToBasket(this.cartItem, this.userName).subscribe();
   }
 
   moreInfo(adId: number){

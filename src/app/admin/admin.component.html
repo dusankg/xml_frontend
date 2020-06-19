@@ -44,7 +44,6 @@
 <br/><br/>
 
 <br/>
-
 <div id="add-types" align="center">
   <h2>Add new types</h2>
  <table >
@@ -175,39 +174,33 @@
   </table>
 </div>
 
-<div id="table-cars" align="center">
-
+<div id="all-users" align="center" >
   <br/>
   <h2>All users</h2>
   <table class="table-main" align="center">
+
     <tr>
     <tr bgcolor = green >
-      <th>Name</th>
-      <th>Surname</th>
-      <th>jmbg</th>
-      <th>Block</th>
-      <th>Activate</th>
+      <th>Username</th>
+      <th>Active</th>
+      <th>Block/Activate</th>
       <th>Delete</th>
 
     </tr>
-    <tr>
-      <td>Add info</td>
-      <td>Add info</td>
-      <td>Add info</td>
-      <th><button class="btn-block" >Block</button></th>
-      <th><button class="btn-add">Activate</button></th>
-      <th><button class="btn-delete">Delete</button></th>
+
+    <tr *ngFor="let user of activeUsers" >
+      <td>{{user.username}}</td>
+      <td>{{user.active}}</td>
+      <th><button class="btn-block" (click)="blockUser(user.username)">Block</button></th>
+      <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
     </tr>
 
-    <tr *ngFor="let user of users" >
-      <td>{{user.name}}</td>
-      <td>{{user.surname}}</td>
-      <td>{{user.jmbg}}</td>
-      <th><button class="btn-block" (click)="blockUser(user.id)">Add</button></th>
-      <th><button class="btn-add" (click)="activateUser(user.id)">Add</button></th>
-      <th><button class="btn-delete" (click)="deleteUser(user.id)">Delete</button></th>
+    <tr *ngFor="let user of nonActiveUsers" >
+      <td>{{user.username}}</td>
+      <td>{{user.active}}</td>
+      <th><button class="btn-add" (click)="activateUser(user.username)">Activate</button></th>
+      <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
     </tr>
-
 
   </table>
 </div>

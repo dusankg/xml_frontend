@@ -3,6 +3,12 @@ import {VehicleDTO} from '../model/VehicleDTO';
 import { AddCarService } from './addCar.service';
 import {Router} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import {BrandDTO} from '../model/BrandDTO';
+import {FuelType} from '../model/FuelType';
+import {TransmissionTypeDTO} from '../model/TransmissionTypeDTO';
+import {VehicleClass} from '../model/VehicleClass';
+import {ModelDTO} from '../model/ModelDTO';
+import {AdminService} from '../admin/admin.service';
 
 @Component({
   selector: 'app-add-car',
@@ -26,6 +32,12 @@ export class AddCarComponent implements OnInit {
   collision_damage_waiver: boolean;
   child_seat: number;
 
+  brands: Set<BrandDTO>;
+  fuelTypes: Set<FuelType>;
+  transmissions: Set<TransmissionTypeDTO>;
+  vehicleClasses: Set<VehicleClass>;
+  models: Set<String>;
+
   public brojac: number;
   public base64Image: string;
   public base64Images: Set<string>;
@@ -35,14 +47,20 @@ export class AddCarComponent implements OnInit {
     this.carDTO.images = new Array<string>();
     this.brojac = 0;
     this.base64Images = new Set<string>();
+
+    this.brands = new Set<BrandDTO>();
+    this.fuelTypes = new Set<FuelType>();
+    this.transmissions = new Set<TransmissionTypeDTO>();
+    this.vehicleClasses = new Set<VehicleClass>();
+    this.models = new Set<String>();
+
   }
 
   ngOnInit(): void {
-    /*
-    if (localStorage.getItem('role') !== 'admin'){
-    this.router.navigate(['home']);
-    }
-    */
+    this.getAllBrands();
+    this.getAllFuelTypes();
+    this.getAllTransmissions();
+    this.getAllVehicleClasses();
   }
 
   onSubmitCreate() {
@@ -95,7 +113,32 @@ export class AddCarComponent implements OnInit {
 
   removeImage(imageName: string){
     this.base64Images.delete(imageName);
-    //this.carDTO.images.delete(imageName);
+  }
+
+  public getAllBrands(){
+    this.service.getAllBrands().subscribe(response => this.brands = response);
+  }
+  public getAllFuelTypes(){
+    this.service.getAllFuelTypes().subscribe(response => this.fuelTypes = response);
+  }
+  public getAllTransmissions(){
+    this.service.getAllTransmissions().subscribe(response => this.transmissions = response);
+  }
+  public getAllVehicleClasses(){
+    this.service.getAllVehicleClasses().subscribe(response => this.vehicleClasses = response);
+  }
+
+  public getModelsFromBrand(){
+    this.models = new Set<String>();
+    // tslint:disable-next-line:prefer-const
+    console.log('Pozove se');
+    for (var item of this.brands.values()){
+      if(item.name === this.brand){
+        for(var pom of item.models.values()){
+          this.models.add(pom.modelName);
+        }
+      }
+    }
   }
 
 }

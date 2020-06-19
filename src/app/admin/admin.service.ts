@@ -29,6 +29,10 @@ export class AdminService {
   private readonly deleteTransmissionUrl: string;
   private readonly deleteClassUrl: string;
 
+  private readonly getUsersUrl: string;
+  private readonly activateUserUrl: string;
+  private readonly blockUserUrl: string;
+
 
   constructor(private http: HttpClient) {
     this.createBrandUrl = 'http://localhost:8079/admin-service/brand/';
@@ -49,14 +53,23 @@ export class AdminService {
     this.deleteTransmissionUrl = 'http://localhost:8079/admin-service/transmission';
     this.deleteClassUrl = 'http://localhost:8079/admin-service/vehicleclass';
 
+    this.getUsersUrl = 'http://localhost:8089/users/getAllByActivationCondition';
+    this.activateUserUrl = 'http://localhost:8089/users/activate';
+    this.blockUserUrl = 'http://localhost:8089/users/block';
+
   }
 
   public getUser(password: string): Observable<any> {
     return this.http.post<any>(this.userUrl, {password});
   }
 
-  public getAllUsers(){
+  public getActiveUsers(){
+    return this.http.get<any>(this.getUsersUrl + '/true');
+  }
 
+
+  public getNonActiveUsers(){
+    return this.http.get<any>(this.getUsersUrl + '/false');
   }
 
   public addNewBrand(brand: BrandDTO): Observable<any>{
@@ -109,14 +122,14 @@ export class AdminService {
     return this.http.post(this.deleteModelUrl + '/' + name, null);
   }
 
-  public blockUser(userId: number){
-
+  public blockUser(username: string){
+    return this.http.get<any>(this.blockUserUrl + '/' + username);
   }
 
-  public activateUser(userId: number){
-
+  public activateUser(username: string){
+    return this.http.get<any>(this.activateUserUrl + '/' + username);
   }
-  public deleteUser(userId: number){
+  public deleteUser(username: string){
 
   }
 }

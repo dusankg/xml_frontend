@@ -35,6 +35,9 @@
 </div>
 <br/><br/>
 <div id="search-form" align="center">
+
+  <input placeholder="Username" [(ngModel)]="userName" /><br/><br/>
+
   <form (ngSubmit)="getCarsBySearch()">
     <div class="form-group">
     <table align="center">
@@ -96,7 +99,7 @@
         <td>{{car.brand}}</td>
         <td>{{car.price}}</td>
         <th><button class="btn-add" (click)="moreInfo(car.id)">More info</button></th>
-        <th><button class="btn-add" (click)="addToBasket(car.id)">Add</button></th>
+        <th><button class="btn-add" (click)="addToBasket(car.id, car.model, car.price, car.companyUsername)">Add</button></th>
       </tr>
 
 

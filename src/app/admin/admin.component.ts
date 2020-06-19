@@ -8,6 +8,7 @@ import {TransmissionTypeDTO} from '../model/TransmissionTypeDTO';
 import {VehicleClass} from '../model/VehicleClass';
 import {ModelDTO} from '../model/ModelDTO';
 import {Observable} from 'rxjs';
+import {UserCredentialsDTO} from '../model/UserCredentialsDTO';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -15,7 +16,9 @@ import {Observable} from 'rxjs';
 })
 export class AdminComponent implements OnInit {
 
-  users: Set<CustomerDTO>;
+  users: Set<UserCredentialsDTO>;
+  activeUsers: Set<UserCredentialsDTO>;
+  nonActiveUsers: Set<UserCredentialsDTO>;
   newBrandName: string;
   newFuelTypeName: string;
   newTransmissionName: string;
@@ -47,6 +50,11 @@ export class AdminComponent implements OnInit {
     this.transmissions = new Set<TransmissionTypeDTO>();
     this.vehicleClasses = new Set<VehicleClass>();
     this.models = new Set<ModelDTO>();
+
+    this.users = new Set<UserCredentialsDTO>();
+    this.activeUsers = new Set<UserCredentialsDTO>();
+    this.nonActiveUsers = new Set<UserCredentialsDTO>();
+
   }
 
   ngOnInit(): void {
@@ -54,21 +62,26 @@ export class AdminComponent implements OnInit {
     this.getAllFuelTypes();
     this.getAllTransmissions();
     this.getAllVehicleClasses();
+    this.getAllUsers();
   }
 
   private getAllUsers(){
-    this.adminService.getAllUsers();
+    this.adminService.getActiveUsers().subscribe(response => this.activeUsers = response);
+    this.adminService.getNonActiveUsers().subscribe(response => this.nonActiveUsers = response);
   }
 
-  public blockUser(userId: number){
-    this.adminService.blockUser(userId);
+  public blockUser(username: string){
+    this.adminService.blockUser(username).subscribe();
+    window.location.reload();
   }
 
-  public activateUser(userId: number){
-    this.adminService.activateUser(userId);
+  public activateUser(username: string){
+    this.adminService.activateUser(username).subscribe();
+    window.location.reload();
   }
-  public deleteUser(userId: number){
-    this.adminService.deleteUser(userId);
+  public deleteUser(username: string){
+    this.adminService.deleteUser(username);
+    window.location.reload();
   }
 
   public getAllBrands(){

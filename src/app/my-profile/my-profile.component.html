@@ -33,7 +33,11 @@
 <br/>
 <br/><br/>
 
-<div id="datesDiv">
+<div id="datesDiv" align="center">
+
+  <input placeholder="Username" [(ngModel)]="userName" />
+  <button (click)="getUsersCars()">Get ads for user</button><br/>
+
   <table align="center">
     <tr>
       <th>Starting date</th>
@@ -61,41 +65,68 @@
   </table>
 </div>
 <br/>
-<div id="table-cars" align="center">
+
+<table >
+  <tbody>
+  <tr>
+    <td>
+      <div id="table-cars" align="center">
 
 
-  <table class="table-main" align="center">
-    <tr>
-    <tr bgcolor = green >
-      <th>Model</th>
-      <th>User</th>
-      <th>Fuel</th>
-      <th>Doors</th>
-      <th>Price</th>
-      <th>Add occupation</th>
-      <th>Delete</th>
+        <table class="table-main" align="center">
+          <thead>
+            <tr>
+            <tr bgcolor = green >
+              <th>Model</th>
+              <th>Owner</th>
+              <th>Price</th>
+              <th>Add occupation</th>
+              <th>Delete</th>
+              <th>Show comments</th>
+            </tr>
+          </thead>
 
-    </tr>
-    <tr>
-      <td>Add info</td>
-      <td>Add info</td>
-      <td>Add info</td>
-      <td>Add info</td>
-      <td>Add info</td>
-      <th><button class="btn-add" (click)="addOccupation(156)">Add occupation</button></th>
-      <th><button class="btn-delete" >Delete</button></th>
-    </tr>
+          <tbody>
+            <tr *ngFor="let car of usersCars" >
+              <td>{{car.model}}</td>
+              <td>{{car.companyUsername}}</td>
+              <td>{{car.price}}</td>
+              <th><button class="btn-add" (click)="addOccupation(car.id)">Add</button></th>
+              <th><button class="btn-delete" (click)="deleteCar(car.id)">Delete</button></th>
+              <th><button>Show comments</button></th>
+            </tr>
+          </tbody>
 
-    <tr *ngFor="let car of cars" >
-      <td>{{car.carModel}}</td>
-      <td>Add info</td>
-      <td>{{car.carModel}}</td>
-      <td>{{car.carModel}}</td>
-      <td>{{car.carModel}}</td>
-      <th><button class="btn-add" (click)="addOccupation(car.id)">Add</button></th>
-      <th><button class="btn-delete" (click)="deleteCar(car.id)">Delete</button></th>
-    </tr>
+        </table>
+      </div>
+    </td>
+    <td>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td><td>Dobar kom,enata dfafkjnaef aekjahefkjaehf aeiufdnaeifn aekjfnaefef feklaafkjh</td>
+          </tr>
+
+          <tr>
+            <td>2</td><td>Dobar kom,enata dfafkjnaef aekjahefkjaehf aeiufdnaeifn aekjfnaefef feklaafkjh</td>
+          </tr>
+
+          <tr>
+            <td>3</td><td>Dobar kom,enata dfafkjnaef aekjahefkjaehf aeiufdnaeifn aekjfnaefef feklaafkjh</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
 
 
-  </table>
-</div>
