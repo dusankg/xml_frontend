@@ -7,6 +7,7 @@ import {VehicleDTO} from '../model/VehicleDTO';
 import {SearchDTO} from '../model/SearchDTO';
 import {CartItem} from '../model/CartItem';
 import {Occupation} from '../model/Occupation';
+import {ShowVehicleDTO} from '../model/ShowVehicleDTO';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,7 @@ import {Occupation} from '../model/Occupation';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  cars: Set<VehicleDTO>;
-  selectedCar: VehicleDTO;
+  cars: Set<ShowVehicleDTO>;
   selectedSearchDTO: SearchDTO;
   selectedPlace: string;
   selectedStartDate: Date;
@@ -26,13 +26,9 @@ export class HomeComponent implements OnInit {
   constructor(private loginService: LoginService, private basketService: BasketService, private  homeService: HomeService, private router: Router) { }
 
   ngOnInit(): void {
-    this.selectedCar = new VehicleDTO();
     this.selectedSearchDTO = new SearchDTO();
     this.cartItem = new CartItem();
-    this.selectedCar.id = 156;
-    this.selectedCar.model = 'Dusan';
     this.cars = new Set<VehicleDTO>();
-    this.cars.add(this.selectedCar);
     this.getAllCars();
     console.log(this.cars);
   }

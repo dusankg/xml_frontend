@@ -15,10 +15,10 @@ export class AddCarService {
 
   constructor(private http: HttpClient) {
     this.carCreateUrl = 'http://localhost:8079/vehicle-service/vehicle/';
-    this.getAllBrandUrl = 'http://localhost:8083/formDetails/brands';
-    this.getAllFuelTypeUrl = 'http://localhost:8083/formDetails/fuel_type';
-    this.getAllTransmissionUrl = 'http://localhost:8083/formDetails/transmissions';
-    this.getAllClassUrl = 'http://localhost:8083/formDetails/vehicle_classes';
+    this.getAllBrandUrl = 'http://localhost:8079/vehicle-service/brands';
+    this.getAllFuelTypeUrl = 'http://localhost:8079/vehicle-service/fuel_type';
+    this.getAllTransmissionUrl = 'http://localhost:8079/vehicle-service/transmissions';
+    this.getAllClassUrl = 'http://localhost:8079/vehicle-service/vehicle_classes';
   }
 
 

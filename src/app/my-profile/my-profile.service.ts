@@ -8,16 +8,9 @@ import {ReservationDTO} from '../model/ReservationDTO';
 
 @Injectable()
 export class MyProfileService {
-  carCreateUrl: string;
   reservationURL: string;
   constructor(private http: HttpClient) {
-    this.carCreateUrl = 'https://localhost:8080/car/create';
-    this.reservationURL = 'http://localhost:8083/reserveVehicle';
-  }
-
-
-  public createCar(carDTO: VehicleDTO): Observable<any>{
-    return this.http.post<any>(this.carCreateUrl , carDTO);
+    this.reservationURL = 'http://localhost:8079/vehicle-service/reserveVehicle';
   }
 
   public deleteCar(carId: number){

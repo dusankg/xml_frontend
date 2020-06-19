@@ -14,18 +14,16 @@ export class HomeService {
 
   constructor(private http: HttpClient) {
     this.searchUrl = 'http://localhost:8079/vehicle-service/search';
-    this.allCarsURL = 'http://localhost:8079/vehicle-service/show';
+    this.allCarsURL = 'http://localhost:8079/vehicle-service/vehicle';
     this.userUrl = 'http://localhost:8080/users/login';
-    this.addToBasketURL = 'http://localhost:8087/cart';
+    this.addToBasketURL = 'http://localhost:8079/cart-service';
   }
   public findCarsBySearch(searchDTO: SearchDTO): Observable<any>{
-    //console.log('Pretraga za model: ' + searchDTO.place + 'Datum: ' + searchDTO.startDate);
     return this.http.post<any>(this.searchUrl, searchDTO);
 
   }
   public getAllCars(): Observable<any>{
     return this.http.get<any>(this.allCarsURL);
-
   }
 
   public addToBasket(item: CartItem, username: string){

@@ -9,7 +9,7 @@ export class AdMoreInfoService {
   private readonly findByIdUrl: string;
 
   constructor(private http: HttpClient) {
-    this.findByIdUrl = 'http://localhost:8079/vehicle-service/details';
+    this.findByIdUrl = 'http://localhost:8079/vehicle-service/vehicle';
   }
 
   public getUser(password: string): Observable<any> {
