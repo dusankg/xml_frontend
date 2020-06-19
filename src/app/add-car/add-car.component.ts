@@ -52,7 +52,7 @@ export class AddCarComponent implements OnInit {
     this.fuelTypes = new Set<FuelType>();
     this.transmissions = new Set<TransmissionTypeDTO>();
     this.vehicleClasses = new Set<VehicleClass>();
-    this.models = new Set<String>();
+    this.models = new Set<string>();
 
   }
 
@@ -77,7 +77,6 @@ export class AddCarComponent implements OnInit {
     this.carDTO.vehicleClass = this.vehicle_class;
     this.carDTO.price = this.price;
     this.carDTO.mileage = this.mileage;
-    this.carDTO.companyUsername = this.companyUsername;
     this.carDTO.startDate = this.startDate;
     this.carDTO.endDate = this.endDate;
     this.carDTO.limitedRentMileage = this.limited_rent_mileage;
@@ -85,7 +84,7 @@ export class AddCarComponent implements OnInit {
     this.carDTO.collisionDamageWaiver = this.collision_damage_waiver;
     this.carDTO.childSeat = this.child_seat;
 
-    this.carDTO.fuelType = e.value;
+    //this.carDTO.fuelType = this.fuel_type;
     this.carDTO.images = Array.from(this.base64Images);
     this.service.createCar(this.carDTO).subscribe(result => {
       alert('Successfully');
@@ -129,13 +128,15 @@ export class AddCarComponent implements OnInit {
   }
 
   public getModelsFromBrand(){
-    this.models = new Set<String>();
+    this.models = new Set<string>();
     // tslint:disable-next-line:prefer-const
     console.log('Pozove se');
+    // tslint:disable-next-line:prefer-const
     for (var item of this.brands.values()){
       if(item.name === this.brand){
+        console.log(item.name)
         for(var pom of item.models.values()){
-          this.models.add(pom.modelName);
+          this.models.add(pom.name);
         }
       }
     }
