@@ -5,13 +5,19 @@ import {Observable, throwError} from 'rxjs';
 @Injectable()
 export class BasketService {
   private readonly getCartItemsURL: string;
+  private readonly deleteCartItemURL: string;
 
   constructor(private http: HttpClient) {
-      this.getCartItemsURL = 'http://localhost:8087/cart';;
+      this.getCartItemsURL = 'http://localhost:8079/cart-service/cart';
+      this.deleteCartItemURL = 'http://localhost:8079/cart-service/cart';
   }
 
 
-  public getCartItems(username: string){
-    return this.http.get<any>(this.getCartItemsURL + '/' + username);
+  public getCartItems(){
+    return this.http.get<any>(this.getCartItemsURL);
+  }
+
+  public deleteCartItem(itemID: number){
+    return this.http.delete(this.getCartItemsURL + '/' + itemID);
   }
 }

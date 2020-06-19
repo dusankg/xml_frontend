@@ -16,10 +16,15 @@ export class BasketComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCartItems();
   }
 
   getCartItems(){
-    this.basketService.getCartItems(this.userName).subscribe(response => this.cartItems = response);
+    this.basketService.getCartItems().subscribe(response => this.cartItems = response);
     console.log(this.cartItems);
+  }
+
+  deleteCartItem(itemID: number){
+    this.basketService.deleteCartItem(itemID).subscribe( () => {location.reload(); });
   }
 }

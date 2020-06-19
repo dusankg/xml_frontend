@@ -16,7 +16,7 @@ export class HomeService {
     this.searchUrl = 'http://localhost:8079/vehicle-service/search';
     this.allCarsURL = 'http://localhost:8079/vehicle-service/vehicle';
     this.userUrl = 'http://localhost:8080/users/login';
-    this.addToBasketURL = 'http://localhost:8079/cart-service';
+    this.addToBasketURL = 'http://localhost:8079/cart-service/cart';
   }
   public findCarsBySearch(searchDTO: SearchDTO): Observable<any>{
     return this.http.post<any>(this.searchUrl, searchDTO);
@@ -30,7 +30,7 @@ export class HomeService {
     // treba da dobijem ulogovanog korisnika i njemu dodam oglas
     console.log(this.addToBasketURL + '/' + username);
     console.log(item);
-    return this.http.post<any>(this.addToBasketURL + '/' + username, item);
+    return this.http.post<any>(this.addToBasketURL, item);
   }
 
   public moreInfo(adId: number){

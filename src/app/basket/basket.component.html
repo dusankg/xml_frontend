@@ -28,8 +28,6 @@
 
   <div align="center">
 
-    <input placeholder="Username" [(ngModel)]="userName" />
-    <button (click)="getCartItems()">Get all basket items</button>
     <table class="table-main" align="center">
       <br/>
       <br/>
@@ -52,7 +50,7 @@
         <td>{{item.time_span.startDate}}</td>
         <td>{{item.time_span.endDate}}</td>
         <th><button class="btn-add">Buy</button></th>
-        <th><button class="btn-add">Delete</button></th>
+        <th><button class="btn-add" (click)="deleteCartItem(item.id)">Delete</button></th>
       </tr>
 
     </table>
