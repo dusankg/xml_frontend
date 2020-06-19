@@ -127,7 +127,7 @@ export class AdminComponent implements OnInit {
   }
 
   public addNewModel(){
-    this.newModelDTO.modelName = this.newModelName;
+    this.newModelDTO.name = this.newModelName;
     this.newModelDTO.brandName = this.selectedBrandNameFormodel;
     this.adminService.addNewModel(this.newModelDTO).subscribe(result => {
       alert('Successfully');

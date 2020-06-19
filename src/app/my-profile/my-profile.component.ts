@@ -28,24 +28,16 @@ export class MyProfileComponent implements OnInit {
   }
 
   getAllCars(){
-    this.homeService.getAllCars().subscribe(response => this.cars = response);
+    this.myProfileService.getAllCars().subscribe(response => this.usersCars = response);
   }
 
-  getUsersCars(){
-    this.usersCars = new Set<VehicleDTO>();
-    // tslint:disable-next-line:prefer-const
-    for (var item of this.cars.values()){
-      if(item.companyUsername === this.userName){
-        this.usersCars.add(item);
-      }
-    }
-  }
 
   public addOccupation(carId: number){
     this.reservation.id = carId;
     this.reservation.start = this.selectedStartingDate;
     this.reservation.end = this.selectedEndingDate;
-    this.myProfileService.addOccupation(this.reservation).subscribe();
+    this.myProfileService.addOccupation(this.reservation).subscribe(result => { alert('Reserved'); },
+      error => { alert('U cannot reserve car for that period'); });
   }
 
   public deleteCar(carId: number){

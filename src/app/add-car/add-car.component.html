@@ -34,8 +34,8 @@
 
       <b style="color:#33ccbb">Model</b>
       <select [(ngModel)]="model" [ngModelOptions]="{standalone: true}" >
-        <option *ngFor="let model of models" [value]="model.modelName" required>
-          {{model.modelName}}
+        <option *ngFor="let model of models" [value]="model" required>
+          {{model}}
         </option>
       </select><br/>
 

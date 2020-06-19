@@ -1,5 +1,5 @@
 export class ModelDTO {
   id: number;
-  modelName: string;
+  name: string;
   brandName: string;
 }
