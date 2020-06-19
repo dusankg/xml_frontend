@@ -15,36 +15,46 @@
   <form (ngSubmit)="onSubmitCreate()" >
 
     <div class="form-group" style="margin-bottom: 5px">
-      <b style="color:#33ccbb">Select fuel type </b>
-      <select class="form-control" id="gasType">
-        <option value="Gas">Gas</option>
-        <option value="Oil">Diesel</option>
-        <option value="LPG">LPD</option>
+      <b style="color:#33ccbb">Fuel type </b>
+      <select [(ngModel)]="fuel_type" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let fuel of fuelTypes" [value]="fuel.name" required>
+          {{fuel.name}}
+        </option>
       </select>
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="text" id="brand" class="form-control" placeholder="Input car brand" required
-             [(ngModel)]="brand"
-             [ngModelOptions]="{standalone: true}"
-      />
+      <b style="color:#33ccbb">Brand </b>
+      <select [(ngModel)]="brand" [ngModelOptions]="{standalone: true}" (change)="getModelsFromBrand()">
+      <option *ngFor="let brand of brands" [value]="brand.name" required>
+        {{brand.name}}
+      </option>
+    </select><br/>
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="text" id="carModel" class="form-control" placeholder="Input car model" required
-             [(ngModel)]="model"
-             [ngModelOptions]="{standalone: true}"
-      />
+
+      <b style="color:#33ccbb">Model</b>
+      <select [(ngModel)]="model" [ngModelOptions]="{standalone: true}" >
+        <option *ngFor="let model of models" [value]="model.modelName" required>
+          {{model.modelName}}
+        </option>
+      </select><br/>
+
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="text" id="transmissionType" class="form-control" placeholder="Input transmission type" required
-             [(ngModel)]="transmission"
-             [ngModelOptions]="{standalone: true}"
-      />
+      <b style="color:#33ccbb">Transmission</b>
+      <select [(ngModel)]="transmission" [ngModelOptions]="{standalone: true}" >
+        <option *ngFor="let tran of transmissions" [value]="tran.name" required>
+          {{tran.name}}
+        </option>
+      </select><br/>
     </div>
     <div class="form-group" style="margin-bottom: 5px">
-      <input type="text" id="vehicle_class" class="form-control" placeholder="Input vehicle class" required
-             [(ngModel)]="vehicle_class"
-             [ngModelOptions]="{standalone: true}"
-      />
+      <b style="color:#33ccbb">Class</b>
+      <select [(ngModel)]="vehicle_class" [ngModelOptions]="{standalone: true}" >
+        <option *ngFor="let class of vehicleClasses" [value]="class.name" required>
+          {{class.name}}
+        </option>
+      </select><br/>
     </div>
     <div class="form-group" style="margin-bottom: 5px">
       <input type="number" id="price" class="form-control" placeholder="Input price" required

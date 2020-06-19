@@ -3,14 +3,16 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { VehicleDTO } from '../model/VehicleDTO';
 import { CustomerDTO } from '../model/CustomerDTO';
+import {ReservationDTO} from '../model/ReservationDTO';
 
 
 @Injectable()
 export class MyProfileService {
-  carCreateUrl : string;
-
+  carCreateUrl: string;
+  reservationURL: string;
   constructor(private http: HttpClient) {
     this.carCreateUrl = 'https://localhost:8080/car/create';
+    this.reservationURL = 'http://localhost:8083/reserveVehicle';
   }
 
 
@@ -21,7 +23,8 @@ export class MyProfileService {
   public deleteCar(carId: number){
     console.log('Brisanje auta sa id-jem: ' + carId);
   }
-  public addOccupation(carId: number, startingDate: Date, endingDate: Date){
-    console.log('Brisanje auta sa id-jem: ' + carId + startingDate + endingDate);
+  public addOccupation(reservation: ReservationDTO){
+    console.log('Dodavanje occupationa za auto: ' + reservation.id + reservation.start + reservation.end);
+    return this.http.post<any>(this.reservationURL, reservation);
   }
 }

@@ -3,19 +3,23 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {jitOnlyGuardedExpression} from '@angular/compiler/src/render3/util';
 import {SearchDTO} from '../model/SearchDTO';
+import {CartItem} from '../model/CartItem';
 
 @Injectable()
 export class HomeService {
   private readonly userUrl: string;
   private readonly searchUrl: string;
   private readonly allCarsURL: string;
+  private  readonly addToBasketURL: string;
 
   constructor(private http: HttpClient) {
     this.searchUrl = 'http://localhost:8079/vehicle-service/search';
     this.allCarsURL = 'http://localhost:8079/vehicle-service/show';
+    this.userUrl = 'http://localhost:8080/users/login';
+    this.addToBasketURL = 'http://localhost:8087/cart';
   }
   public findCarsBySearch(searchDTO: SearchDTO): Observable<any>{
-    // console.log('Pretraga za model: ' + searchDTO.place + 'Datum: ' + searchDTO.startDate);
+    //console.log('Pretraga za model: ' + searchDTO.place + 'Datum: ' + searchDTO.startDate);
     return this.http.post<any>(this.searchUrl, searchDTO);
 
   }
@@ -24,9 +28,11 @@ export class HomeService {
 
   }
 
-  public addToBasket(adId: number){
+  public addToBasket(item: CartItem, username: string){
     // treba da dobijem ulogovanog korisnika i njemu dodam oglas
-    console.log('Dodavanje u korpu oglasa id: ' + adId);
+    console.log(this.addToBasketURL + '/' + username);
+    console.log(item);
+    return this.http.post<any>(this.addToBasketURL + '/' + username, item);
   }
 
   public moreInfo(adId: number){

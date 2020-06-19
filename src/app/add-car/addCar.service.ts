@@ -8,8 +8,17 @@ import { VehicleDTO } from '../model/VehicleDTO';
 export class AddCarService {
   carCreateUrl: string;
 
+  private readonly getAllBrandUrl: string;
+  private readonly getAllFuelTypeUrl: string;
+  private readonly getAllTransmissionUrl: string;
+  private readonly getAllClassUrl: string;
+
   constructor(private http: HttpClient) {
     this.carCreateUrl = 'http://localhost:8079/vehicle-service/vehicle/';
+    this.getAllBrandUrl = 'http://localhost:8083/formDetails/brands';
+    this.getAllFuelTypeUrl = 'http://localhost:8083/formDetails/fuel_type';
+    this.getAllTransmissionUrl = 'http://localhost:8083/formDetails/transmissions';
+    this.getAllClassUrl = 'http://localhost:8083/formDetails/vehicle_classes';
   }
 
 
@@ -18,5 +27,20 @@ export class AddCarService {
     return this.http.post<VehicleDTO>(this.carCreateUrl, vehicleDTO);
   }
 
+  public getAllBrands(): Observable<any>{
+    return this.http.get<any>(this.getAllBrandUrl);
 
+  }
+  public getAllFuelTypes(): Observable<any>{
+    return this.http.get<any>(this.getAllFuelTypeUrl);
+
+  }
+  public getAllTransmissions(): Observable<any>{
+    return this.http.get<any>(this.getAllTransmissionUrl);
+
+  }
+  public getAllVehicleClasses(): Observable<any>{
+    return this.http.get<any>(this.getAllClassUrl);
+
+  }
 }
