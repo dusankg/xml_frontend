@@ -53,23 +53,19 @@ export class AdminService {
     this.deleteTransmissionUrl = 'http://localhost:8079/admin-service/transmission';
     this.deleteClassUrl = 'http://localhost:8079/admin-service/vehicleclass';
 
-    this.getUsersUrl = 'http://localhost:8089/users/getAllByActivationCondition';
-    this.activateUserUrl = 'http://localhost:8089/users/activate';
-    this.blockUserUrl = 'http://localhost:8089/users/block';
+    this.getUsersUrl = 'http://localhost:8079/admin-service/users';
+    this.activateUserUrl = 'http://localhost:8079/admin-service/users/activate';
+    this.blockUserUrl = 'http://localhost:8079/admin-service/users/block';
 
-  }
-
-  public getUser(password: string): Observable<any> {
-    return this.http.post<any>(this.userUrl, {password});
   }
 
   public getActiveUsers(){
-    return this.http.get<any>(this.getUsersUrl + '/true');
+    return this.http.get<any>(this.getUsersUrl + '/True');
   }
 
 
   public getNonActiveUsers(){
-    return this.http.get<any>(this.getUsersUrl + '/false');
+    return this.http.get<any>(this.getUsersUrl + '/False');
   }
 
   public addNewBrand(brand: BrandDTO): Observable<any>{

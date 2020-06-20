@@ -42,9 +42,12 @@
 </style>
 <br/>
 <br/><br/>
+<button (click)="showUsersFunction()">Users</button><br/>
+<button (click)="showTypesFunction()">Form types</button>
 
 <br/>
-<div id="add-types" align="center">
+<div id="types" [hidden]="showUsers">
+<div id="add-types" align="center" >
   <h2>Add new types</h2>
  <table >
     <tr>
@@ -105,8 +108,7 @@
 
 </div>
 <br/><br/>
-
-<div id="table-types" align="center" style="width: 100%">
+<div  id="table-types" align="center" style="width: 100%" >
   <table>
     <thead>
     <tr>
@@ -173,8 +175,8 @@
 
   </table>
 </div>
-
-<div id="all-users" align="center" >
+</div>
+<div [hidden]="!showUsers" id="all-users" align="center" >
   <br/>
   <h2>All users</h2>
   <table class="table-main" align="center">

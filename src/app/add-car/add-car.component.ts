@@ -38,6 +38,7 @@ export class AddCarComponent implements OnInit {
   vehicleClasses: Set<VehicleClass>;
   models: Set<String>;
 
+
   public brojac: number;
   public base64Image: string;
   public base64Images: Set<string>;
@@ -53,6 +54,8 @@ export class AddCarComponent implements OnInit {
     this.transmissions = new Set<TransmissionTypeDTO>();
     this.vehicleClasses = new Set<VehicleClass>();
     this.models = new Set<string>();
+
+
 
   }
 
@@ -136,10 +139,12 @@ export class AddCarComponent implements OnInit {
       if(item.name === this.brand){
         console.log(item.name)
         for(var pom of item.models.values()){
-          this.models.add(pom.name);
+          this.models.add(pom.modelName);
         }
       }
     }
   }
+
+
 
 }
