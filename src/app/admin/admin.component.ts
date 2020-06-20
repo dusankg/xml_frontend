@@ -37,6 +37,7 @@ export class AdminComponent implements OnInit {
   transmissions: Set<TransmissionTypeDTO>;
   vehicleClasses: Set<VehicleClass>;
   models: Set<ModelDTO>;
+  public showUsers: boolean;
 
   constructor(private adminService: AdminService) {
     this.newBrandDTO = new BrandDTO();
@@ -127,12 +128,13 @@ export class AdminComponent implements OnInit {
   }
 
   public addNewModel(){
-    this.newModelDTO.name = this.newModelName;
+    this.newModelDTO.modelName = this.newModelName;
     this.newModelDTO.brandName = this.selectedBrandNameFormodel;
+    console.log(this.newModelDTO.modelName, this.newModelDTO.brandName);
     this.adminService.addNewModel(this.newModelDTO).subscribe(result => {
       alert('Successfully');
     });
-    window.location.reload();
+    //window.location.reload();
   }
 
   public addNewFuelType(){
@@ -157,4 +159,10 @@ export class AdminComponent implements OnInit {
     window.location.reload();
   }
 
+  public showUsersFunction(){
+    this.showUsers = true;
+  }
+  public showTypesFunction(){
+    this.showUsers = false;
+  }
 }

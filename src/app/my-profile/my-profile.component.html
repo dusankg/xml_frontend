@@ -32,8 +32,10 @@
 </style>
 <br/>
 <br/><br/>
-
-<div id="datesDiv" align="center">
+<button (click)="showMyAdsFuncion()">My ads</button>
+<button (click)="showMyRequestsFuncion()">Requests on my ads</button>
+<button (click)="showRequestsOnMyAdsFuncion()">My requests</button>
+<div [hidden]="showMyAds" id="myAds" align="center">
 
   <table align="center">
     <tr>
@@ -60,7 +62,7 @@
 
     </tr>
   </table>
-</div>
+
 <br/>
 
 <table >
@@ -125,5 +127,154 @@
   </tr>
   </tbody>
 </table>
+</div>
 
+<div id="requestOnMyAds" [hidden]="showMyRequests" align="center">
+  <br/>
+  <h2>Pending requests</h2>
+  <table class="table-main" align="center">
+    <thead>
+    <tr>
+    <tr bgcolor = green >
+      <th>ID</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Vehicles</th>
+      <th>Approve</th>
+      <th>Reject</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let request of requestsOnMyAdsPending" >
+      <td>{{request.id}}</td>
+      <td>{{request.owner_username}}</td>
+      <td>{{request.status}}</td>
+      <td>
+        <table>
+          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+        </table>
+      </td>
+      <td><button (click)="approveRequest(request.id)">Approve</button></td>
+      <td><button (click)="rejectRequest(request.id)">Reject</button></td>
+    </tr>
+    </tbody>
+
+  </table>
+
+  <br/>
+  <h2>Upcoming requests</h2>
+  <table class="table-main" align="center">
+    <thead>
+    <tr>
+    <tr bgcolor = green >
+      <th>ID</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Vehicles</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let request of requestsOnMyAdsUncoming" >
+      <td>{{request.id}}</td>
+      <td>{{request.owner_username}}</td>
+      <td>{{request.status}}</td>
+      <td>
+        <table>
+          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<div id="myRequests" [hidden]="showRequestsOnMyAds" align="center">
+  <br/>
+  <h2>Pending requests</h2>
+  <table class="table-main" align="center">
+    <thead>
+    <tr>
+    <tr bgcolor = green >
+      <th>ID</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Vehicles</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let request of myRequestsPending" >
+      <td>{{request.id}}</td>
+      <td>{{request.owner_username}}</td>
+      <td>{{request.status}}</td>
+      <td>
+        <table>
+          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+  <br/>
+  <h2>Approved requests</h2>
+  <table class="table-main" align="center">
+    <thead>
+    <tr>
+    <tr bgcolor = green >
+      <th>ID</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Vehicles</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let request of myRequestsApproved" >
+      <td>{{request.id}}</td>
+      <td>{{request.owner_username}}</td>
+      <td>{{request.status}}</td>
+      <td>
+        <table>
+          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+  <br/>
+  <h2>Rejected requests</h2>
+  <table class="table-main" align="center">
+    <thead>
+    <tr>
+    <tr bgcolor = green >
+      <th>ID</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Vehicles</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let request of myRequestsRejected" >
+      <td>{{request.id}}</td>
+      <td>{{request.owner_username}}</td>
+      <td>{{request.status}}</td>
+      <td>
+        <table>
+          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>
 
