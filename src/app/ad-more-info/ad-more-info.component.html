@@ -114,6 +114,27 @@
   </div>
 
   <div>
+    <h4>Comments</h4>
+    <table>
+      <thead>
+      <tr>
+        <th>Rating</th>
+        <th>Comment</th>
+        <th>Writer</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let report of reports">
+        <td>{{report.rating}}</td>
+        <td>{{report.comment}}</td>
+        <td>{{report.writer_username}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div>
     <h2>Images</h2><br/>
     <table>
       <tr *ngFor="let image of carDTO.images">

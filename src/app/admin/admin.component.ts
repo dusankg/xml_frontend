@@ -9,6 +9,7 @@ import {VehicleClass} from '../model/VehicleClass';
 import {ModelDTO} from '../model/ModelDTO';
 import {Observable} from 'rxjs';
 import {UserCredentialsDTO} from '../model/UserCredentialsDTO';
+import {VehicleReportDTO} from '../model/VehicleReportDTO';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -37,7 +38,11 @@ export class AdminComponent implements OnInit {
   transmissions: Set<TransmissionTypeDTO>;
   vehicleClasses: Set<VehicleClass>;
   models: Set<ModelDTO>;
-  public showUsers: boolean;
+  hideUsers: boolean;
+  hideTypes: boolean;
+  hideComments: boolean;
+
+  reports: Set<VehicleReportDTO>;
 
   constructor(private adminService: AdminService) {
     this.newBrandDTO = new BrandDTO();
@@ -56,14 +61,23 @@ export class AdminComponent implements OnInit {
     this.activeUsers = new Set<UserCredentialsDTO>();
     this.nonActiveUsers = new Set<UserCredentialsDTO>();
 
+    this.reports = new Set<VehicleReportDTO>();
   }
 
   ngOnInit(): void {
+    this.hideComments = true;
+    this.hideTypes = true;
+    this.hideUsers = false;
+    this.updateData();
+  }
+
+  updateData(){
     this.getAllBrands();
     this.getAllFuelTypes();
     this.getAllTransmissions();
     this.getAllVehicleClasses();
     this.getAllUsers();
+    this.getReports();
   }
 
   private getAllUsers(){
@@ -73,16 +87,19 @@ export class AdminComponent implements OnInit {
 
   public blockUser(username: string){
     this.adminService.blockUser(username).subscribe();
-    window.location.reload();
+    this.updateData();
+    //window.location.reload();
   }
 
   public activateUser(username: string){
     this.adminService.activateUser(username).subscribe();
-    window.location.reload();
+    this.updateData();
+    //window.location.reload();
   }
   public deleteUser(username: string){
     this.adminService.deleteUser(username);
-    window.location.reload();
+    this.updateData();
+    //window.location.reload();
   }
 
   public getAllBrands(){
@@ -99,24 +116,24 @@ export class AdminComponent implements OnInit {
   }
   public deleteBrand(name: string){
     this.adminService.deleteBrand(name).subscribe();
-    window.location.reload();
+    this.updateData();
   }
   public deleteFuelType(name: string){
     this.adminService.deleteFuelType(name).subscribe();
-    window.location.reload();
+    this.updateData();
   }
   public deleteTransmission(name: string){
     this.adminService.deleteTransmission(name).subscribe();
-    window.location.reload();
+    this.updateData();
   }
   public deleteClass(name: string){
     this.adminService.deleteClass(name).subscribe();
-    window.location.reload();
+    this.updateData();
   }
   public deleteModel(name: string){
     this.adminService.deleteModel(name).subscribe();
-    window.location.reload();
-    }
+    this.updateData();
+  }
 
 
   public addNewBrand(){
@@ -142,27 +159,49 @@ export class AdminComponent implements OnInit {
     this.adminService.addNewFuelType(this.newFuelTypeDTO).subscribe(result => {
       alert('Successfully');
     });
-    window.location.reload();
+    this.updateData();
   }
   public addNewTransmission(){
     this.newTransmissionDTO.name = this.newTransmissionName;
     this.adminService.addNewTransmission(this.newTransmissionDTO).subscribe(result => {
       alert('Successfully');
     });
-    window.location.reload();
+    this.updateData();
   }
   public addNewClass(){
     this.newVehicleClassDTO.name = this.newClassName;
     this.adminService.addNewClass(this.newVehicleClassDTO).subscribe(result => {
       alert('Successfully');
     });
-    window.location.reload();
+    this.updateData();
   }
 
-  public showUsersFunction(){
-    this.showUsers = true;
+  public showUsers(){
+    this.hideUsers = false;
+    this.hideTypes = true;
+    this.hideComments = true;
   }
-  public showTypesFunction(){
-    this.showUsers = false;
+  public showTypes(){
+    this.hideTypes = false;
+    this.hideComments = true;
+    this.hideUsers = true;
+  }
+  public showComments(){
+    this.hideComments = false;
+    this.hideTypes = true;
+    this.hideUsers = true;
+  }
+
+  public getReports(){
+    this.adminService.getReports().subscribe(response => this.reports = response);
+  }
+
+  public approveComment(id: number){
+    this.adminService.approveComment(id).subscribe();
+    this.updateData();
+  }
+  public rejectComment(id: number){
+    this.adminService.rejectComment(id).subscribe();
+    this.updateData();
   }
 }

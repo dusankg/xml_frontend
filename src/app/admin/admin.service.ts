@@ -33,6 +33,7 @@ export class AdminService {
   private readonly activateUserUrl: string;
   private readonly blockUserUrl: string;
 
+  private readonly reportURL: string;
 
   constructor(private http: HttpClient) {
     this.createBrandUrl = 'http://localhost:8079/admin-service/brand/';
@@ -56,6 +57,8 @@ export class AdminService {
     this.getUsersUrl = 'http://localhost:8079/admin-service/users';
     this.activateUserUrl = 'http://localhost:8079/admin-service/users/activate';
     this.blockUserUrl = 'http://localhost:8079/admin-service/users/block';
+
+    this.reportURL = 'http://localhost:8079/report-service/reports/admin';
 
   }
 
@@ -126,6 +129,16 @@ export class AdminService {
     return this.http.get<any>(this.activateUserUrl + '/' + username);
   }
   public deleteUser(username: string){
+  }
 
+  public getReports(){
+    return this.http.get<any>(this.reportURL);
+  }
+
+  public approveComment(id:  number){
+    return this.http.put(this.reportURL + '/approve/' + id, null);
+  }
+  public rejectComment(id: number){
+    return this.http.put(this.reportURL + '/reject/' + id, null);
   }
 }

@@ -28,15 +28,27 @@
     background-color: #4CAF50;
     color: white;
   }
+
+  .btn-send{
+    background: white;
+    color: orange;
+    border: none;
+    border-radius: 5px;
+  }
+  .btn-send:hover {
+    background-color: orange;
+    color: white;
+  }
   tr:nth-child(even) {background-color: #f2f2f2;}
 </style>
 <br/>
-<br/><br/>
 <button (click)="showMyAdsFuncion()">My ads</button>
 <button (click)="showMyRequestsFuncion()">Requests on my ads</button>
 <button (click)="showRequestsOnMyAdsFuncion()">My requests</button>
-<div [hidden]="showMyAds" id="myAds" align="center">
+<button (click)="openMessages()">Messages</button>
 
+<div id="myAds" [hidden]="showMyAds"  align="center">
+  <br/>
   <table align="center">
     <tr>
       <th>Starting date</th>
@@ -92,7 +104,7 @@
               <td>{{car.price}}</td>
               <th><button class="btn-add" (click)="addOccupation(car.id)">Add</button></th>
               <th><button class="btn-delete" (click)="deleteCar(car.id)">Delete</button></th>
-              <th><button>Show comments</button></th>
+              <th><button (click)="getReportsForVehicle(car.id, car.brand+' '+car.model)">Show comments</button></th>
             </tr>
           </tbody>
 
@@ -101,23 +113,21 @@
     </td>
     <td>
     <div>
+      <br/>
+      <h3>Comments {{vehicleNameReport}}</h3>
       <table>
         <thead>
           <tr>
-            <th>Comments</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Writer</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td><td>Dobar kom,enata dfafkjnaef aekjahefkjaehf aeiufdnaeifn aekjfnaefef feklaafkjh</td>
-          </tr>
-
-          <tr>
-            <td>2</td><td>Dobar kom,enata dfafkjnaef aekjahefkjaehf aeiufdnaeifn aekjfnaefef feklaafkjh</td>
-          </tr>
-
-          <tr>
-            <td>3</td><td>Dobar kom,enata dfafkjnaef aekjahefkjaehf aeiufdnaeifn aekjfnaefef feklaafkjh</td>
+          <tr *ngFor="let report of reports">
+            <td>{{report.rating}}</td>
+            <td>{{report.comment}}</td>
+            <td>{{report.writer_username}}</td>
           </tr>
 
         </tbody>
@@ -129,152 +139,261 @@
 </table>
 </div>
 
+
+<div id="myAdsRequestButtons" [hidden]="showMyRequests">
+  <br/>
+  <button (click)="changeMyAdsRequestsView()">{{myAdsRequestButtonString}}</button>
+</div>
 <div id="requestOnMyAds" [hidden]="showMyRequests" align="center">
   <br/>
-  <h2>Pending requests</h2>
-  <table class="table-main" align="center">
-    <thead>
-    <tr>
-    <tr bgcolor = green >
-      <th>ID</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th>Vehicles</th>
-      <th>Approve</th>
-      <th>Reject</th>
-    </tr>
-    </thead>
+  <div id="myAdsRequestsPending" [hidden]="!hideMyAdsRequests">
+    <h2>Pending requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+        <th>Approve</th>
+        <th>Reject</th>
+      </tr>
+      </thead>
 
-    <tbody>
-    <tr *ngFor="let request of requestsOnMyAdsPending" >
-      <td>{{request.id}}</td>
-      <td>{{request.owner_username}}</td>
-      <td>{{request.status}}</td>
-      <td>
-        <table>
-          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
-        </table>
-      </td>
-      <td><button (click)="approveRequest(request.id)">Approve</button></td>
-      <td><button (click)="rejectRequest(request.id)">Reject</button></td>
-    </tr>
-    </tbody>
+      <tbody>
+      <tr *ngFor="let request of requestsOnMyAdsPending" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+          </table>
+        </td>
+        <td><button (click)="approveRequest(request.id)" class="btn-add">Approve</button></td>
+        <td><button (click)="rejectRequest(request.id)" class="btn-delete">Reject</button></td>
+      </tr>
+      </tbody>
 
-  </table>
+    </table>
+  </div>
 
-  <br/>
-  <h2>Upcoming requests</h2>
-  <table class="table-main" align="center">
-    <thead>
-    <tr>
-    <tr bgcolor = green >
-      <th>ID</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th>Vehicles</th>
-    </tr>
-    </thead>
+  <div id="myAdsRequestsUpcoming" [hidden]="hideMyAdsRequests">
+    <h2>Upcoming requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+      </tr>
+      </thead>
 
-    <tbody>
-    <tr *ngFor="let request of requestsOnMyAdsUncoming" >
-      <td>{{request.id}}</td>
-      <td>{{request.owner_username}}</td>
-      <td>{{request.status}}</td>
-      <td>
-        <table>
-          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
-        </table>
-      </td>
-    </tr>
-    </tbody>
+      <tbody>
+      <tr *ngFor="let request of requestsOnMyAdsUncoming" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+          </table>
+        </td>
+      </tr>
+      </tbody>
 
-  </table>
+    </table>
+  </div>
 </div>
 
+
+<div id="requestButtons" [hidden]="showRequestsOnMyAds">
+  <br/>
+  <button (click)="showMyApproved()">Approved</button>
+  <button (click)="showMyPending()">Pending</button>
+  <button (click)="showMyRejected()">Rejected</button>
+</div>
+<div id="sendMessage" [hidden]="hideMessageBox" align="center">
+  <h3>Send message to: {{sendMessageTo}} </h3>
+  <textarea [(ngModel)]="messageText"></textarea>
+  <button (click)="sendMessage()" class="btn-send">Send message</button>
+</div>
+
+
 <div id="myRequests" [hidden]="showRequestsOnMyAds" align="center">
+
+
+
+  <div id="approvedMyRequests" [hidden]="hideMyRequestsApproved">
+
+    <div id="sendReport" [hidden]="hideReportBox" align="center">
+      <h3>Send report: {{sendReportTo}} </h3>
+      Comment: <input [(ngModel)]="reportText"/><br/>
+      Rating: <input type="number" max="5" min="1" [(ngModel)]="rating"/><br/>
+      <button (click)="sendReport()" class="btn-send">Send report</button>
+    </div>
+
+    <h2>Approved requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let request of myRequestsApproved" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}
+              <button (click)="openReportBox(vehicle.vehicle_id)">Send report</button>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <button (click)="openMesasgeBox(request.owner_username)">Send message</button>
+        </td>
+
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+
+  <div id="pendingMyRequests" [hidden]="hideMyRequestsPending">
+    <h2>Pending requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let request of myRequestsPending" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+          </table>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+
+  <div id="rejectedMyRequests" [hidden]="hideMyRequestsRejected">
+    <h2>Rejected requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let request of myRequestsRejected" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
+          </table>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
+<div id="messageButtons" [hidden]="hideMessages">
   <br/>
-  <h2>Pending requests</h2>
-  <table class="table-main" align="center">
-    <thead>
-    <tr>
-    <tr bgcolor = green >
-      <th>ID</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th>Vehicles</th>
+  <button (click)="changeMessages()">{{messageButtonText}}</button>
+</div>
+<div id="messages" align="center" [hidden]="hideMessages">
+  <div id="receivedMessages" [hidden]="!hideSentMessages">
+    <h2>Received messages</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Sender</th>
+        <th>Time</th>
+        <th>Message</th>
 
-    </tr>
-    </thead>
+      </tr>
+      </thead>
 
-    <tbody>
-    <tr *ngFor="let request of myRequestsPending" >
-      <td>{{request.id}}</td>
-      <td>{{request.owner_username}}</td>
-      <td>{{request.status}}</td>
-      <td>
-        <table>
-          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
-        </table>
-      </td>
-    </tr>
-    </tbody>
+      <tbody>
+      <tr *ngFor="let message of receivedMessages" >
+        <td>{{message.id}}</td>
+        <td>{{message.sender_username}}</td>
+        <td>{{message.time}}</td>
+        <td>{{message.textMessage}}</td>
+        <td>
+          <button (click)="openMesasgeBox(message.sender_username)" class="btn-send">Send message</button>
+        </td>
+      </tr>
+      </tbody>
 
-  </table>
+    </table>
+  </div>
 
-  <br/>
-  <h2>Approved requests</h2>
-  <table class="table-main" align="center">
-    <thead>
-    <tr>
-    <tr bgcolor = green >
-      <th>ID</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th>Vehicles</th>
-    </tr>
-    </thead>
+  <div id="sentMessages" [hidden]="hideSentMessages">
+    <h2>Sent messages</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Receiver</th>
+        <th>Time</th>
+        <th>Message</th>
 
-    <tbody>
-    <tr *ngFor="let request of myRequestsApproved" >
-      <td>{{request.id}}</td>
-      <td>{{request.owner_username}}</td>
-      <td>{{request.status}}</td>
-      <td>
-        <table>
-          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
-        </table>
-      </td>
-    </tr>
-    </tbody>
+      </tr>
+      </thead>
 
-  </table>
+      <tbody>
+      <tr *ngFor="let message of sentMessages" >
+        <td>{{message.id}}</td>
+        <td>{{message.receiver_username}}</td>
+        <td>{{message.time}}</td>
+        <td>{{message.textMessage}}</td>
+        <td>
+          <button (click)="openMesasgeBox(message.receiver_username)" class="btn-send">Send message</button>
+        </td>
+      </tr>
+      </tbody>
 
-  <br/>
-  <h2>Rejected requests</h2>
-  <table class="table-main" align="center">
-    <thead>
-    <tr>
-    <tr bgcolor = green >
-      <th>ID</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th>Vehicles</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr *ngFor="let request of myRequestsRejected" >
-      <td>{{request.id}}</td>
-      <td>{{request.owner_username}}</td>
-      <td>{{request.status}}</td>
-      <td>
-        <table>
-          <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}</tr>
-        </table>
-      </td>
-    </tr>
-    </tbody>
-
-  </table>
+    </table>
+  </div>
 </div>
 

@@ -139,7 +139,8 @@ export class AddCarComponent implements OnInit {
       if(item.name === this.brand){
         console.log(item.name)
         for(var pom of item.models.values()){
-          this.models.add(pom.modelName);
+          // @ts-ignore
+          this.models.add(pom.name);
         }
       }
     }
