@@ -37,6 +37,9 @@ export class AppComponent implements OnInit{
   goAdminPage(){
     this.router.navigate(['admin']);
   }
+  goRegisterPage(){
+    this.router.navigate(['register']);
+  }
 
   get someoneLoggedIn(){
     if (localStorage.getItem('jwt') === null){

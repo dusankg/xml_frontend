@@ -7,6 +7,7 @@ import {BasketComponent} from './basket/basket.component';
 import { AdMoreInfoComponent } from './ad-more-info/ad-more-info.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'ad-more-info/:id', component: AdMoreInfoComponent},
   {path: 'my-profile', component: MyProfileComponent},
   {path: 'admin', component: AdminComponent},
+  {path: 'register', component: RegisterComponent},
 ];
 
 @NgModule({

@@ -21,7 +21,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyProfileService} from './my-profile/my-profile.service';
 import { AdminComponent } from './admin/admin.component';
 import { AdminService } from './admin/admin.service';
-
+import { RegisterComponent } from './register/register.component';
+import { RegisterService } from './register/register.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AdminService } from './admin/admin.service';
     AdMoreInfoComponent,
     MyProfileComponent,
     AdminComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ import { AdminService } from './admin/admin.service';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [ LoginService, AddCarService, BasketService, HomeService, AdMoreInfoService, MyProfileService, AdminService,
+  providers: [ LoginService, AddCarService, BasketService, HomeService, AdMoreInfoService, MyProfileService, AdminService, RegisterService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
