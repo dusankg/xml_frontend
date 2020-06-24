@@ -7,9 +7,10 @@ import {jitOnlyGuardedExpression} from '@angular/compiler/src/render3/util';
 export class AdMoreInfoService {
   private readonly userUrl: string;
   private readonly findByIdUrl: string;
-
+  private readonly reportURL: string;
   constructor(private http: HttpClient) {
     this.findByIdUrl = 'http://localhost:8079/vehicle-service/vehicle';
+    this.reportURL = 'http://localhost:8079/report-service/reports';
   }
 
   public getUser(password: string): Observable<any> {
@@ -21,7 +22,7 @@ export class AdMoreInfoService {
     return this.http.get<any>(this.findByIdUrl + '/' + id);
   }
 
-  public getCarFromId(id: number){
-    console.log('Trazi se auto sa idijem: ' + id);
+  public getReportsForVehicle(vehicle_id_str: number){
+    return this.http.get<any>(this.reportURL + '/' + vehicle_id_str);
   }
 }

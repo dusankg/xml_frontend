@@ -3,6 +3,7 @@ import {VehicleDTO} from '../model/VehicleDTO';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AdMoreInfoService} from './ad-more-info.service';
+import {VehicleReportDTO} from '../model/VehicleReportDTO';
 
 @Component({
   selector: 'app-ad-more-info',
@@ -27,6 +28,8 @@ export class AdMoreInfoComponent implements OnInit {
   collision_damage_waiver: boolean;
   child_seat: number;
 
+  reports: Set<VehicleReportDTO>
+
   private routeSub: Subscription;
   carId: number;
   public base64Images: Array<string>;
@@ -34,6 +37,7 @@ export class AdMoreInfoComponent implements OnInit {
   constructor(private route: ActivatedRoute, private  adMoreInfoService: AdMoreInfoService) {
     this.carDTO = new VehicleDTO();
     this.base64Images = new Array<string>();
+    this.reports = new Set<VehicleReportDTO>();
   }
 
   ngOnInit(): void {
@@ -42,7 +46,7 @@ export class AdMoreInfoComponent implements OnInit {
     });
 
     this.getCarFromId();
-    //this.loadImages();
+    this.getReportsForVehicle();
   }
 
   getCarFromId(){
@@ -66,6 +70,8 @@ export class AdMoreInfoComponent implements OnInit {
     });
 
   }
-
+  public getReportsForVehicle(){
+    this.adMoreInfoService.getReportsForVehicle(this.carId).subscribe(response => this.reports = response);
+  }
 
 }

@@ -41,142 +41,145 @@
   tr:nth-child(even) {background-color: #f2f2f2;}
 </style>
 <br/>
-<br/><br/>
-<button (click)="showUsersFunction()">Users</button><br/>
-<button (click)="showTypesFunction()">Form types</button>
+
+<button (click)="showUsers()">Users</button>
+<button (click)="showTypes()">Form types</button>
+<button (click)="showComments()">Comments</button>
 
 <br/>
-<div id="types" [hidden]="showUsers">
-<div id="add-types" align="center" >
-  <h2>Add new types</h2>
- <table >
-    <tr>
-      <th>New brand</th>
-      <th> <input id="brand"
-                  [(ngModel)]="newBrandName"
-                  [ngModelOptions]="{standalone: true}"/>
-      </th>
-      <th><button (click)="addNewBrand()">Add</button></th>
-    </tr>
-    <tr>
-      <th>New fuel type</th>
-      <td>
-        <input id="fuel-type"
-                   [(ngModel)]="newFuelTypeName"
-                   [ngModelOptions]="{standalone: true}"
-        />
-      </td>
-      <th><button (click)="addNewFuelType()">Add</button></th>
-    </tr>
-    <tr>
-      <th>New transmission</th>
-      <td>
-        <input id="transmission"
-                   [(ngModel)]="newTransmissionName"
-                   [ngModelOptions]="{standalone: true}"
-        />
-      </td>
-      <th><button (click)="addNewTransmission()">Add</button></th>
-
-    </tr>
-    <tr>
-      <th>New class</th>
-      <td>
-        <input id="class"
-                     [(ngModel)]="newClassName"
+<div id="types" [hidden]="hideTypes">
+  <br/>
+  <div id="add-types" align="center" >
+    <h2>Add new types</h2>
+   <table >
+      <tr>
+        <th>New brand</th>
+        <th> <input id="brand"
+                    [(ngModel)]="newBrandName"
+                    [ngModelOptions]="{standalone: true}"/>
+        </th>
+        <th><button (click)="addNewBrand()">Add</button></th>
+      </tr>
+      <tr>
+        <th>New fuel type</th>
+        <td>
+          <input id="fuel-type"
+                     [(ngModel)]="newFuelTypeName"
                      [ngModelOptions]="{standalone: true}"
-        />
-      </td>
-      <th><button (click)="addNewClass()">Add</button></th>
-    </tr>
-    <tr>
-      <th>New model</th>
-      <td>
-        <select [(ngModel)]="selectedBrandNameFormodel">
-          <option *ngFor="let brand of brands" [value]="brand.name" required>
-            {{brand.name}}
-          </option>
-        </select><br/>
-        <input id="model"
-                     [(ngModel)]="newModelName"
+          />
+        </td>
+        <th><button (click)="addNewFuelType()">Add</button></th>
+      </tr>
+      <tr>
+        <th>New transmission</th>
+        <td>
+          <input id="transmission"
+                     [(ngModel)]="newTransmissionName"
                      [ngModelOptions]="{standalone: true}"
-        />
-      </td>
-      <th><button (click)="addNewModel()">Add</button></th>
-    </tr>
-  </table>
+          />
+        </td>
+        <th><button (click)="addNewTransmission()">Add</button></th>
 
+      </tr>
+      <tr>
+        <th>New class</th>
+        <td>
+          <input id="class"
+                       [(ngModel)]="newClassName"
+                       [ngModelOptions]="{standalone: true}"
+          />
+        </td>
+        <th><button (click)="addNewClass()">Add</button></th>
+      </tr>
+      <tr>
+        <th>New model</th>
+        <td>
+          <select [(ngModel)]="selectedBrandNameFormodel">
+            <option *ngFor="let brand of brands" [value]="brand.name" required>
+              {{brand.name}}
+            </option>
+          </select><br/>
+          <input id="model"
+                       [(ngModel)]="newModelName"
+                       [ngModelOptions]="{standalone: true}"
+          />
+        </td>
+        <th><button (click)="addNewModel()">Add</button></th>
+      </tr>
+    </table>
+
+  </div>
+  <br/><br/>
+  <div  id="table-types" align="center" style="width: 100%" >
+    <table>
+      <thead>
+      <tr>
+        <th>Brands</th>
+        <th>FuelTypes</th>
+        <th>Transmissions</th>
+        <th>Classes</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr valign="top">
+        <th>
+          <table>
+            <tr *ngFor="let brand of brands" >
+              <td>{{brand.name}}</td>
+              <td> <button (click)="deleteBrand(brand.name)">Delete brand</button>
+                <table>
+                  <tr *ngFor="let model of brand.models" >
+                    <td>{{model.name}}</td>
+                    <td> <button (click)="deleteModel(model.name)">Delete</button>
+
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+          </table>
+        </th>
+
+        <th>
+          <table>
+            <tr *ngFor="let brand of fuelTypes" >
+              <td>{{brand.name}}</td>
+              <td> <button (click)="deleteFuelType(brand.name)">Delete</button> </td>
+            </tr>
+          </table>
+        </th>
+
+        <th>
+          <table>
+            <tr *ngFor="let brand of transmissions" >
+              <td>{{brand.name}}</td>
+              <td> <button (click)="deleteTransmission(brand.name)">Delete</button> </td>
+            </tr>
+          </table>
+        </th>
+
+        <th>
+          <table>
+            <tr *ngFor="let brand of vehicleClasses" >
+              <td>{{brand.name}}</td>
+              <td> <button (click)="deleteClass(brand.name)">Delete</button> </td>
+            </tr>
+          </table>
+        </th>
+      </tr>
+
+
+      </tbody>
+
+
+
+    </table>
+  </div>
 </div>
-<br/><br/>
-<div  id="table-types" align="center" style="width: 100%" >
-  <table>
-    <thead>
-    <tr>
-      <th>Brands</th>
-      <th>FuelTypes</th>
-      <th>Transmissions</th>
-      <th>Classes</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <tr valign="top">
-      <th>
-        <table>
-          <tr *ngFor="let brand of brands" >
-            <td>{{brand.name}}</td>
-            <td> <button (click)="deleteBrand(brand.name)">Delete brand</button>
-              <table>
-                <tr *ngFor="let model of brand.models" >
-                  <td>{{model.name}}</td>
-                  <td> <button (click)="deleteModel(model.name)">Delete</button>
-
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-        </table>
-      </th>
-
-      <th>
-        <table>
-          <tr *ngFor="let brand of fuelTypes" >
-            <td>{{brand.name}}</td>
-            <td> <button (click)="deleteFuelType(brand.name)">Delete</button> </td>
-          </tr>
-        </table>
-      </th>
-
-      <th>
-        <table>
-          <tr *ngFor="let brand of transmissions" >
-            <td>{{brand.name}}</td>
-            <td> <button (click)="deleteTransmission(brand.name)">Delete</button> </td>
-          </tr>
-        </table>
-      </th>
-
-      <th>
-        <table>
-          <tr *ngFor="let brand of vehicleClasses" >
-            <td>{{brand.name}}</td>
-            <td> <button (click)="deleteClass(brand.name)">Delete</button> </td>
-          </tr>
-        </table>
-      </th>
-    </tr>
-
-
-    </tbody>
-
-
-
-  </table>
-</div>
-</div>
-<div [hidden]="!showUsers" id="all-users" align="center" >
+<div id="all-users"  [hidden]="hideUsers" align="center" >
   <br/>
   <h2>All users</h2>
   <table class="table-main" align="center">
@@ -203,6 +206,35 @@
       <th><button class="btn-add" (click)="activateUser(user.username)">Activate</button></th>
       <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
     </tr>
+
+  </table>
+</div>
+
+<div id="comments" [hidden]="hideComments" align="center">
+  <br/>
+  <h2>Comments</h2>
+  <table class="table-main" align="center">
+
+    <tr>
+    <tr bgcolor = green >
+      <th>Vehicle id</th>
+      <th>Writer</th>
+      <th>Comment</th>
+      <th>Rating</th>
+      <th>Approve</th>
+      <th>Reject</th>
+
+    </tr>
+
+    <tr *ngFor="let report of reports" >
+      <td>{{report.vehicle_id}}</td>
+      <td>{{report.writer_username}}</td>
+      <td>{{report.comment}}</td>
+      <td>{{report.rating}}</td>
+      <th><button class="btn-add" (click)="approveComment(report.id)">Approve</button></th>
+      <th><button class="btn-delete" (click)="rejectComment(report.id)">Reject</button></th>
+    </tr>
+
 
   </table>
 </div>

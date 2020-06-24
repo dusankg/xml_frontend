@@ -4,6 +4,10 @@ import {MyProfileService} from '../my-profile/my-profile.service';
 import {HomeService} from '../home/home.service';
 import {ReservationDTO} from '../model/ReservationDTO';
 import {RequestDTO} from '../model/RequestDTO';
+import {MessageDTO} from '../model/MessageDTO';
+import {SendMessageDTO} from '../model/SendMessageDTO';
+import {ReportDTO} from '../model/ReportDTO';
+import {VehicleReportDTO} from '../model/VehicleReportDTO';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -29,6 +33,31 @@ export class MyProfileComponent implements OnInit {
   myRequestsApproved: Set<RequestDTO>
   myRequestsRejected: Set<RequestDTO>
 
+  sendMessageTo: string;
+  hideMessageBox: boolean;
+  messageText: string;
+  sentMessages: Set<MessageDTO>;
+  receivedMessages: Set<MessageDTO>;
+
+  hideMessages: boolean;
+  hideSentMessages: boolean;
+  messageButtonText: string;
+
+  hideMyRequestsApproved: boolean;
+  hideMyRequestsPending: boolean;
+  hideMyRequestsRejected: boolean;
+
+  myAdsRequestButtonString: string;
+  hideMyAdsRequests: boolean;
+
+  sendReportTo: number;
+  hideReportBox: boolean;
+  reportText: string;
+  rating: number;
+
+  reports: Set<VehicleReportDTO>
+  vehicleNameReport: string;
+
   constructor(private myProfileService: MyProfileService, private homeService: HomeService) {
     this.cars = new Set<VehicleDTO>();
     this.usersCars = new Set<VehicleDTO>();
@@ -40,14 +69,36 @@ export class MyProfileComponent implements OnInit {
     this.myRequestsPending = new Set<RequestDTO>();
     this.myRequestsApproved = new Set<RequestDTO>();
     this.myRequestsRejected = new Set<RequestDTO>();
+
+    this.sentMessages = new Set<MessageDTO>();
+    this.receivedMessages = new Set<MessageDTO>();
+    this.messageButtonText = 'Show sent messages';
+    this.myAdsRequestButtonString = 'Show upcoming requests';
+    this.hideMyAdsRequests = true;
+
+    this.reports = new Set<VehicleReportDTO>();
   }
 
   ngOnInit(): void {
-    this.getAllCars();
+
     this.showMyAds = false;
     this.showMyRequests = true;
     this.showRequestsOnMyAds = true;
 
+    this.hideMessageBox = true;
+    this.hideMessages = true;
+    this.hideSentMessages = true;
+
+    this.hideMyRequestsApproved = false;
+    this.hideMyRequestsPending = true;
+    this.hideMyRequestsRejected = true;
+
+    this.hideReportBox = true;
+    this.updateData();
+  }
+
+  updateData(){
+    this.getAllCars();
     this.getMyRequestsPending();
     this.getMyRequestsApproved();
     this.getMyRequestsRejected()
@@ -55,6 +106,8 @@ export class MyProfileComponent implements OnInit {
     this.getRequestOnMyAdsPending();
     this.getRequestOnMyAdsUncoming();
 
+    this.getSentMessages();
+    this.getReceivedMessages();
   }
 
   getAllCars(){
@@ -77,16 +130,25 @@ export class MyProfileComponent implements OnInit {
     this.showMyAds = false;
     this.showMyRequests = true;
     this.showRequestsOnMyAds = true;
+    this.hideMessageBox = true;
+    this.messageText = '';
+    this.hideMessages = true;
   }
   public showMyRequestsFuncion(){
     this.showMyAds = true;
     this.showMyRequests = false;
     this.showRequestsOnMyAds = true;
+    this.hideMessageBox = true;
+    this.messageText = '';
+    this.hideMessages = true;
   }
   public showRequestsOnMyAdsFuncion(){
     this.showMyAds = true;
     this.showMyRequests = true;
     this.showRequestsOnMyAds = false;
+    this.hideMessageBox = true;
+    this.messageText = '';
+    this.hideMessages = true;
   }
 
   getMyRequestsPending(){
@@ -107,10 +169,98 @@ export class MyProfileComponent implements OnInit {
 
   public approveRequest(id: number){
     this.myProfileService.approveRequest(id).subscribe();
-    location.reload();
+    this.updateData();
   }
   public rejectRequest(id: number){
     this.myProfileService.rejectRequest(id).subscribe();
-    location.reload();
+    this.updateData();
   }
+
+  public openMesasgeBox(owner: string){
+    this.sendMessageTo = owner;
+    this.hideMessageBox = false;
+  }
+
+  public sendMessage(){
+    this.hideMessageBox = true;
+    var messageSend: SendMessageDTO;
+    messageSend = new SendMessageDTO();
+    messageSend.receiver = this.sendMessageTo;
+    messageSend.text = this.messageText;
+    console.log("Iz component.ts: " + messageSend.text)
+    this.myProfileService.sendMessage(messageSend).subscribe();
+    this.messageText = '';
+    this.updateData();
+  }
+
+  public getSentMessages(){
+    this.myProfileService.getSentMessages().subscribe(response => this.sentMessages = response);
+  }
+  public getReceivedMessages(){
+    this.myProfileService.getReceivedMessages().subscribe(response => this.receivedMessages = response);
+  }
+  public openMessages(){
+    this.hideMessages = false;
+    this.showMyAds = true;
+    this.showMyRequests = true;
+    this.showRequestsOnMyAds = true;
+    this.hideMessageBox = true;
+  }
+
+  public changeMessages(){
+    this.hideSentMessages = !this.hideSentMessages;
+    if(this.hideSentMessages){
+      this.messageButtonText = 'Show sent messages';
+    } else {
+      this.messageButtonText = 'Show received messages';
+    }
+  }
+
+  public showMyApproved(){
+    this.hideMyRequestsApproved = false;
+    this.hideMyRequestsRejected = true;
+    this.hideMyRequestsPending = true;
+  }
+  public showMyPending(){
+    this.hideMyRequestsApproved = true;
+    this.hideMyRequestsRejected = true;
+    this.hideMyRequestsPending = false;
+  }
+  public showMyRejected(){
+    this.hideMyRequestsApproved = true;
+    this.hideMyRequestsRejected = false;
+    this.hideMyRequestsPending = true;
+  }
+
+  public changeMyAdsRequestsView(){
+    this.hideMyAdsRequests = !this.hideMyAdsRequests;
+    if(!this.hideMyAdsRequests){
+      this.myAdsRequestButtonString = 'Show pending requests';
+    } else {
+      this.myAdsRequestButtonString = 'Show upcoming requests';
+    }
+  }
+
+  public sendReport(){
+    this.hideReportBox = true;
+    var reportSend: ReportDTO;
+    reportSend = new ReportDTO();
+    reportSend.vehicle_id = this.sendReportTo;
+    reportSend.comment = this.reportText;
+    reportSend.rating = this.rating;
+    // todo add subsribe
+    this.myProfileService.sendReport(reportSend).subscribe();
+    this.reportText = '';
+    this.updateData();
+  }
+  public openReportBox(owner: number){
+    this.sendReportTo = owner;
+    this.hideReportBox = false;
+  }
+
+  public getReportsForVehicle(vehicle_id: number, vehicleName: string){
+    this.vehicleNameReport = vehicleName;
+    this.myProfileService.getReportsForVehicle(vehicle_id).subscribe(response => this.reports = response);
+  }
+
 }
