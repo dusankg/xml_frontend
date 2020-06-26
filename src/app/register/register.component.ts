@@ -34,19 +34,33 @@ export class RegisterComponent implements OnInit {
     this.user.username = this.email;
     if(this.password !== this.confirmPassword){
       alert('Passwords dont match');
+      return;
     }
+    this.registerService.freeUser(this.email).subscribe(data => {
+      if(data === true){
+        this.executeSendinCode();
+      }else{
+        alert("Username is not free");
+      }
+    });
+
+  }
+  public finishRegistration(){
+    this.validation.username = this.validationEmail;
+    this.validation.validationCode = this.validationCode;
+    this.registerService.validate(this.validation).subscribe(response => {
+      alert('Now, you can login');
+      this.router.navigate(['login']);    
+    }, err => alert(err.status + ": Validation code is invalid"));
+    
+  }
+
+  public executeSendinCode(){
     this.user.password = this.password;
     this.user.role = 'CLIENT';
     this.showValidatePage = true;
     this.registerService.sendRequest(this.user).subscribe();
     alert('Validation code sent to email: ' + this.email);
-  }
-  public finishRegistration(){
-    this.validation.username = this.validationEmail;
-    this.validation.validationCode = this.validationCode;
-    this.registerService.validate(this.validation).subscribe();
-    alert('Now, you can login');
-    this.router.navigate(['login']);
   }
 
 }
