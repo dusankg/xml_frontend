@@ -46,6 +46,30 @@
 <button (click)="showMyRequestsFuncion()">Requests on my ads</button>
 <button (click)="showRequestsOnMyAdsFuncion()">My requests</button>
 <button (click)="openMessages()">Messages</button>
+<button (click)="showChangePasswordBox()">Change password</button>
+
+<div align="center" [hidden]="hideChangePasswordBox">
+  Change password
+  <table>
+    <tr>
+      <td>Old password</td>
+      <td> <input [(ngModel)]="oldPassword" > </td>
+    </tr>
+    <tr>
+      <td>New password</td>
+      <td> <input [(ngModel)]= "newPassword"> </td>
+    </tr>
+    <tr>
+      <td>Repeat new password</td>
+      <td> <input [(ngModel)]= "repeatNewPassword"> </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td> <button (click)="changePasssword()">Change password</button> </td>
+    </tr>
+  </table>
+
+</div>
 
 <div id="myAds" [hidden]="showMyAds"  align="center">
   <br/>

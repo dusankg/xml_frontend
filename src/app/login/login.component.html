@@ -300,17 +300,52 @@
   </div>
 </div>
 <div class="main">
-  <div class="col-md-6 col-sm-12">
+  <div class="col-md-6 col-sm-12" [hidden]="hideLoginBox">
     <div class="login-form">
       <form>
         <div class="form-group">
           <label>Email</label>
-          <input type="text" [(ngModel)]="username" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Email">
+          <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Email">
 
           <label>Password</label>
           <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Password">
         </div>
-        <button type="submit" class="btn btn-black" (click)="login()">Login</button>
+        <button type="submit" class="btn btn-black" (click)="login()">Login</button><br/>
+        <button type="submit" class="btn btn-black" (click)="showNewPasswordBox()">Forgot password?</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="resetPassword" class="col-md-6 col-sm-12" [hidden]="hideNewPasswordBox">
+    <div class="login-form">
+      <form>
+        <h4>Reset password</h4>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Email">
+
+          <label>New password</label>
+          <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Password">
+
+          <label>Repeat new password</label>
+          <input type="password" [(ngModel)]="confirmPassword" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Password">
+        </div>
+        <button type="submit" class="btn btn-black" (click)="sendValidationCode()">Send validation code</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="validateAccount" [hidden]="hideValidateBox" class="col-md-6 col-sm-12" >
+    <div class="login-form">
+      <form>
+        <h4>Validate password</h4>
+        <div class="form-group">
+          <label>Enter validation code</label>
+          <input type="number"  class="form-control" placeholder="Validation code" [(ngModel)]="validationCode" [ngModelOptions]="{standalone:true}">
+          <label>Re-enter email</label>
+          <input type="text" class="form-control" placeholder="Re-enter Email" [(ngModel)]="validationEmail" [ngModelOptions]="{standalone:true}">
+        </div>
+        <button type="submit" class="btn btn-black" (click)="finishValidation()">Finish registration</button>
       </form>
     </div>
   </div>

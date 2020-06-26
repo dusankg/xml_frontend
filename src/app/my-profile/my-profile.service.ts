@@ -7,6 +7,7 @@ import {ReservationDTO} from '../model/ReservationDTO';
 import {MessageDTO} from '../model/MessageDTO';
 import {SendMessageDTO} from '../model/SendMessageDTO';
 import {ReportDTO} from '../model/ReportDTO';
+import {ChangePasswordDTO} from '../model/ChangePasswordDTO';
 
 
 @Injectable()
@@ -20,6 +21,9 @@ export class MyProfileService {
   messagesURL: string;
 
   reportURL: string;
+
+  changePasswordURL: string;
+
   constructor(private http: HttpClient) {
     this.getAllCarsURL = 'http://localhost:8079/vehicle-service/vehicle/user';
     this.reservationURL = 'http://localhost:8079/vehicle-service/vehicle/reserve';
@@ -30,6 +34,8 @@ export class MyProfileService {
     this.messagesURL = 'http://localhost:8079/messaging-service/messages';
 
     this.reportURL = 'http://localhost:8079/report-service/reports';
+
+    this.changePasswordURL = 'http://localhost:8079/login-service/password';
   }
 
   public addOccupation(reservation: ReservationDTO){
@@ -79,5 +85,10 @@ export class MyProfileService {
   }
   public getReportsForVehicle(vehicle_id_str: number){
     return this.http.get<any>(this.reportURL + '/' + vehicle_id_str);
+  }
+
+  public changePassword(changePasswordDTO: ChangePasswordDTO){
+    console.log(changePasswordDTO.newPassword);
+    return this.http.put<ChangePasswordDTO>(this.changePasswordURL, changePasswordDTO);
   }
 }
