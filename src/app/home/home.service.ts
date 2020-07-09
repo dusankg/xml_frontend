@@ -9,6 +9,7 @@ import {CartItem} from '../model/CartItem';
 export class HomeService {
   private readonly userUrl: string;
   private readonly searchUrl: string;
+  private readonly searchAdvancedUrl : string;
   private readonly allCarsURL: string;
   private  readonly addToBasketURL: string;
 
@@ -17,9 +18,15 @@ export class HomeService {
     this.allCarsURL = 'http://localhost:8079/vehicle-service/vehicle';
     this.userUrl = 'http://localhost:8080/users/login';
     this.addToBasketURL = 'http://localhost:8079/cart-service/cart';
+    this.searchAdvancedUrl = 'http://localhost:8079/vehicle-service/search/advanced';
   }
   public findCarsBySearch(searchDTO: SearchDTO): Observable<any>{
     return this.http.post<any>(this.searchUrl, searchDTO);
+
+  }
+
+  public findCarsBySearchAdvanced(searchDTO: SearchDTO): Observable<any>{
+    return this.http.post<any>(this.searchAdvancedUrl, searchDTO);
 
   }
   public getAllCars(): Observable<any>{

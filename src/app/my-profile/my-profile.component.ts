@@ -120,7 +120,11 @@ export class MyProfileComponent implements OnInit {
   }
 
   getAllCars(){
-    this.myProfileService.getAllCars().subscribe(response => this.usersCars = response);
+    this.myProfileService.getAllCars().subscribe(response => this.usersCars = response,err => {
+      if(err.status){
+        alert("You have not permission..");
+      }
+    });
   }
 
 
@@ -175,7 +179,11 @@ export class MyProfileComponent implements OnInit {
     this.myProfileService.getRequestsOnMyAdsPending().subscribe(response => this.requestsOnMyAdsPending = response);
   }
   getRequestOnMyAdsUncoming(){
-    this.myProfileService.getRequestsOnMyAdsUncoming().subscribe(response => this.requestsOnMyAdsUncoming = response);
+    this.myProfileService.getRequestsOnMyAdsUncoming().subscribe(response => this.requestsOnMyAdsUncoming = response,error => {
+      if(error.status === 401){
+        alert("You have not request permission");
+      }
+    });
   }
 
   public approveRequest(id: number){
@@ -208,7 +216,11 @@ export class MyProfileComponent implements OnInit {
     this.myProfileService.getSentMessages().subscribe(response => this.sentMessages = response);
   }
   public getReceivedMessages(){
-    this.myProfileService.getReceivedMessages().subscribe(response => this.receivedMessages = response);
+    this.myProfileService.getReceivedMessages().subscribe(response => this.receivedMessages = response,error => {
+      if(error.status === 401){
+        alert("You have not a message permission..");
+      }
+    });
   }
   public openMessages(){
     this.hideMessages = false;
