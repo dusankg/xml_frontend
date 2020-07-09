@@ -8,6 +8,8 @@ import {MessageDTO} from '../model/MessageDTO';
 import {SendMessageDTO} from '../model/SendMessageDTO';
 import {ReportDTO} from '../model/ReportDTO';
 import {VehicleReportDTO} from '../model/VehicleReportDTO';
+import {ChangePasswordDTO} from '../model/ChangePasswordDTO';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -58,7 +60,13 @@ export class MyProfileComponent implements OnInit {
   reports: Set<VehicleReportDTO>
   vehicleNameReport: string;
 
-  constructor(private myProfileService: MyProfileService, private homeService: HomeService) {
+  hideChangePasswordBox: boolean;
+
+  oldPassword: string;
+  newPassword: string;
+  repeatNewPassword: string;
+
+  constructor(private myProfileService: MyProfileService, private homeService: HomeService, private  router: Router) {
     this.cars = new Set<VehicleDTO>();
     this.usersCars = new Set<VehicleDTO>();
     this.reservation = new ReservationDTO();
@@ -94,6 +102,7 @@ export class MyProfileComponent implements OnInit {
     this.hideMyRequestsRejected = true;
 
     this.hideReportBox = true;
+    this.hideChangePasswordBox = true;
     this.updateData();
   }
 
@@ -150,7 +159,9 @@ export class MyProfileComponent implements OnInit {
     this.messageText = '';
     this.hideMessages = true;
   }
-
+  public showChangePasswordBox(){
+    this.hideChangePasswordBox = false;
+  }
   getMyRequestsPending(){
     this.myProfileService.getMyRequestsPending().subscribe(response => this.myRequestsPending = response);
   }
@@ -263,4 +274,23 @@ export class MyProfileComponent implements OnInit {
     this.myProfileService.getReportsForVehicle(vehicle_id).subscribe(response => this.reports = response);
   }
 
+  public changePasssword(){
+    if(this.newPassword === this.repeatNewPassword){
+      let changePasswordDTO: ChangePasswordDTO;
+      changePasswordDTO = new ChangePasswordDTO();
+      changePasswordDTO.newPassword = this.newPassword;
+      changePasswordDTO.oldPassword = this.oldPassword;
+      this.myProfileService.changePassword(changePasswordDTO).subscribe(response => {
+          this.hideChangePasswordBox = true;
+          alert('Password has been changed');
+          localStorage.clear();
+          this.router.navigate(['login']);
+      },
+          error =>  alert('Incorrect password'));
+
+    } else {
+      alert('Passwords does not match');
+    }
+
+  }
 }

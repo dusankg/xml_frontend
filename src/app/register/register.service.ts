@@ -19,4 +19,8 @@ export class RegisterService {
   public validate(validation: ValidationDTO){
     return this.http.put(this.registerURL, validation);
   }
+
+  public freeUser(username: string){
+    return this.http.get<any>(this.registerURL + '/' + username);
+  }
 }
