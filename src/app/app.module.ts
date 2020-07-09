@@ -23,6 +23,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminService } from './admin/admin.service';
 import { RegisterComponent } from './register/register.component';
 import { RegisterService } from './register/register.service';
+import { PermissionComponent } from './permission/permission.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { RegisterService } from './register/register.service';
     MyProfileComponent,
     AdminComponent,
     RegisterComponent,
+    PermissionComponent,
   ],
   imports: [
     BrowserModule,
