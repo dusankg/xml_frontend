@@ -45,13 +45,45 @@
 <button (click)="showUsers()">Users</button>
 <button (click)="showTypes()">Form types</button>
 <button (click)="showComments()">Comments</button>
+<button (click)="showCompanies()">Companies</button>
 
 <br/>
+<div id="all-users"  [hidden]="hideUsers" align="center" >
+  <br/>
+  <h2>All users</h2>
+  <table class="table-main" align="center">
+
+    <tr>
+    <tr bgcolor = green >
+      <th>Username</th>
+      <th>Active</th>
+      <th>Block/Activate</th>
+      <th>Delete</th>
+
+    </tr>
+
+    <tr *ngFor="let user of activeUsers" >
+      <td>{{user.username}}</td>
+      <td>{{user.active}}</td>
+      <th><button class="btn-block" (click)="blockUser(user.username)">Block</button></th>
+      <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
+    </tr>
+
+    <tr *ngFor="let user of nonActiveUsers" >
+      <td>{{user.username}}</td>
+      <td>{{user.active}}</td>
+      <th><button class="btn-add" (click)="activateUser(user.username)">Activate</button></th>
+      <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
+    </tr>
+
+  </table>
+</div>
+
 <div id="types" [hidden]="hideTypes">
   <br/>
   <div id="add-types" align="center" >
     <h2>Add new types</h2>
-   <table >
+    <table >
       <tr>
         <th>New brand</th>
         <th> <input id="brand"
@@ -64,8 +96,8 @@
         <th>New fuel type</th>
         <td>
           <input id="fuel-type"
-                     [(ngModel)]="newFuelTypeName"
-                     [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="newFuelTypeName"
+                 [ngModelOptions]="{standalone: true}"
           />
         </td>
         <th><button (click)="addNewFuelType()">Add</button></th>
@@ -74,8 +106,8 @@
         <th>New transmission</th>
         <td>
           <input id="transmission"
-                     [(ngModel)]="newTransmissionName"
-                     [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="newTransmissionName"
+                 [ngModelOptions]="{standalone: true}"
           />
         </td>
         <th><button (click)="addNewTransmission()">Add</button></th>
@@ -85,8 +117,8 @@
         <th>New class</th>
         <td>
           <input id="class"
-                       [(ngModel)]="newClassName"
-                       [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="newClassName"
+                 [ngModelOptions]="{standalone: true}"
           />
         </td>
         <th><button (click)="addNewClass()">Add</button></th>
@@ -100,8 +132,8 @@
             </option>
           </select><br/>
           <input id="model"
-                       [(ngModel)]="newModelName"
-                       [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="newModelName"
+                 [ngModelOptions]="{standalone: true}"
           />
         </td>
         <th><button (click)="addNewModel()">Add</button></th>
@@ -179,37 +211,6 @@
   </div>
 </div>
 
-<div id="all-users"  [hidden]="hideUsers" align="center" >
-  <br/>
-  <h2>All users</h2>
-  <table class="table-main" align="center">
-
-    <tr>
-    <tr bgcolor = green >
-      <th>Username</th>
-      <th>Active</th>
-      <th>Block/Activate</th>
-      <th>Delete</th>
-
-    </tr>
-
-    <tr *ngFor="let user of activeUsers" >
-      <td>{{user.username}}</td>
-      <td>{{user.active}}</td>
-      <th><button class="btn-block" (click)="blockUser(user.username)">Block</button></th>
-      <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
-    </tr>
-
-    <tr *ngFor="let user of nonActiveUsers" >
-      <td>{{user.username}}</td>
-      <td>{{user.active}}</td>
-      <th><button class="btn-add" (click)="activateUser(user.username)">Activate</button></th>
-      <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
-    </tr>
-
-  </table>
-</div>
-
 <div id="comments" [hidden]="hideComments" align="center">
   <br/>
   <h2>Comments</h2>
@@ -237,4 +238,31 @@
 
 
   </table>
+</div>
+
+<div id="companies" [hidden]="hideCompanies" align="center">
+  <br/>
+  <form>
+    <div class="form-group">
+      <table >
+        <tbody>
+        <tr>
+          <td><label>Email</label> </td>
+          <td><input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone:true}" class="form-control" placeholder="Enter Email"></td>
+        </tr>
+        <tr>
+          <td><label>Password</label> </td>
+          <td><input type="text"  class="form-control" placeholder="Enter Password" [(ngModel)]="password" [ngModelOptions]="{standalone:true}"> </td>
+        </tr>
+        <tr>
+          <td><label>Confirm password</label> </td>
+          <td><input type="text"  class="form-control" placeholder="Confirm Password" [(ngModel)]="confirmPassword" [ngModelOptions]="{standalone:true}"></td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-black" (click)="registerCompany()">Register company</button>
+  </form>
 </div>

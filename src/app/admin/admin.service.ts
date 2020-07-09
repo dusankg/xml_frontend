@@ -7,6 +7,7 @@ import {FuelType} from '../model/FuelType';
 import {TransmissionTypeDTO} from '../model/TransmissionTypeDTO';
 import {VehicleClass} from '../model/VehicleClass';
 import {ModelDTO} from '../model/ModelDTO';
+import {UserDTO} from '../model/UserDTO';
 
 @Injectable()
 export class AdminService {
@@ -35,6 +36,8 @@ export class AdminService {
 
   private readonly reportURL: string;
 
+  private readonly registerURL: string;
+
   constructor(private http: HttpClient) {
     this.createBrandUrl = 'http://localhost:8079/admin-service/brand/';
     this.createModelUrl = 'http://localhost:8079/admin-service/model/';
@@ -60,6 +63,7 @@ export class AdminService {
 
     this.reportURL = 'http://localhost:8079/report-service/reports/admin';
 
+    this.registerURL = 'http://localhost:8079/register-service/register/company';
   }
 
   public getActiveUsers(){
@@ -140,5 +144,9 @@ export class AdminService {
   }
   public rejectComment(id: number){
     return this.http.put(this.reportURL + '/reject/' + id, null);
+  }
+  public registerCompany(user: UserDTO){
+    alert('Company is registered ' + user.username + ' ' + user.password);
+    return this.http.post<any>(this.registerURL, user);
   }
 }

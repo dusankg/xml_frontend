@@ -10,6 +10,8 @@ import {ModelDTO} from '../model/ModelDTO';
 import {Observable} from 'rxjs';
 import {UserCredentialsDTO} from '../model/UserCredentialsDTO';
 import {VehicleReportDTO} from '../model/VehicleReportDTO';
+import {UserDTO} from '../model/UserDTO';
+import {error} from '@angular/compiler/src/util';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -41,7 +43,11 @@ export class AdminComponent implements OnInit {
   hideUsers: boolean;
   hideTypes: boolean;
   hideComments: boolean;
+  hideCompanies: boolean;
 
+  email: string;
+  password: string;
+  confirmPassword: string;
   reports: Set<VehicleReportDTO>;
 
   constructor(private adminService: AdminService) {
@@ -68,6 +74,7 @@ export class AdminComponent implements OnInit {
     this.hideComments = true;
     this.hideTypes = true;
     this.hideUsers = false;
+    this.hideCompanies = true;
     this.updateData();
   }
 
@@ -180,16 +187,26 @@ export class AdminComponent implements OnInit {
     this.hideUsers = false;
     this.hideTypes = true;
     this.hideComments = true;
+    this.hideCompanies = true;
   }
   public showTypes(){
     this.hideTypes = false;
     this.hideComments = true;
     this.hideUsers = true;
+    this.hideCompanies = true;
   }
   public showComments(){
     this.hideComments = false;
     this.hideTypes = true;
     this.hideUsers = true;
+    this.hideCompanies = true;
+  }
+
+  public showCompanies(){
+    this.hideComments = true;
+    this.hideTypes = true;
+    this.hideUsers = true;
+    this.hideCompanies = false;
   }
 
   public getReports(){
@@ -203,5 +220,13 @@ export class AdminComponent implements OnInit {
   public rejectComment(id: number){
     this.adminService.rejectComment(id).subscribe();
     this.updateData();
+  }
+  public registerCompany(){
+    let user: UserDTO;
+    user = new UserDTO();
+    user.username = this.email;
+    user.password = this.password;
+    user.role = 'COMPANY';
+    this.adminService.registerCompany(user).subscribe();
   }
 }
