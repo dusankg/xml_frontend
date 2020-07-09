@@ -22,6 +22,7 @@
   <button class="button-head" *ngIf="someoneLoggedIn" (click)="goMyPage()">MY PROFILE</button>
   <button class="button-head" *ngIf="clientLoggedIn" (click)="goAddCar()">PLACE AD</button>
   <button class="button-head"  *ngIf="adminLoggedIn" (click)="goAdminPage()">ADMIN PAGE</button>
+  <button class="button-head"  *ngIf="adminLoggedIn" (click)="goPermission()">PERMISSION PAGE</button>
   <span style="float:right;">
       <button class="button-head" *ngIf="!someoneLoggedIn" (click)="goRegisterPage()">REGISTER</button>
       <button class="button-head" *ngIf="!someoneLoggedIn" (click)="goLogin()">LOGIN</button>

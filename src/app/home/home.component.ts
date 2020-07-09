@@ -20,8 +20,22 @@ export class HomeComponent implements OnInit {
   selectedPlace: string;
   selectedStartDate: Date;
   selectedEndDate: Date;
+
+  selectedBrand : string;
+  selectedModel : string;
+  selectedGas : string;
+  selectedTrans : string;
+  selectedClass : string;
+  selectedPrice1 : number;
+  selectedPrice2 : number;
+  selectedKMAmount : number;
+  selectedPlannedKMAmount : number;
+  selectedCDW : boolean;
+  selectedKidsSeats : number;
+
   userName: string;
   cartItem: CartItem;
+  searchChoose : boolean;
 
   constructor(private loginService: LoginService, private basketService: BasketService, private  homeService: HomeService, private router: Router) { }
 
@@ -29,8 +43,8 @@ export class HomeComponent implements OnInit {
     this.selectedSearchDTO = new SearchDTO();
     this.cartItem = new CartItem();
     this.cars = new Set<VehicleDTO>();
+    this.searchChoose = false;
     this.getAllCars();
-    console.log(this.cars);
   }
 
   logout() {
@@ -38,6 +52,46 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  getCarsBySearchAdvanced(){
+    this.selectedSearchDTO.brand = this.selectedBrand;
+    this.selectedSearchDTO.model = this.selectedModel;
+    this.selectedSearchDTO.carClass = this.selectedClass;
+    if(this.selectedPrice1 == undefined){
+      this.selectedSearchDTO.price1 = -1;
+    }else {
+      this.selectedSearchDTO.price1 = this.selectedPrice1;
+    }
+
+    if(this.selectedPrice2 == undefined){
+      this.selectedSearchDTO.price2 = -1;
+    }else {
+      this.selectedSearchDTO.price2 = this.selectedPrice2;
+    }
+
+    if(this.selectedKMAmount == undefined){
+      this.selectedSearchDTO.KMAmount = -1;
+    }else {
+      this.selectedSearchDTO.KMAmount = this.selectedKMAmount;
+    }
+
+    if(this.selectedPlannedKMAmount == undefined){
+      this.selectedSearchDTO.plannedKMAmount = -1;
+    }else {
+      this.selectedSearchDTO.plannedKMAmount = this.selectedPlannedKMAmount;
+    }
+
+    if(this.selectedKidsSeats == undefined){
+      this.selectedSearchDTO.kidsSeats = -1;
+    }else {
+      this.selectedSearchDTO.kidsSeats = this.selectedKidsSeats;
+    }
+    this.selectedSearchDTO.CDW = this.selectedCDW;
+    this.selectedSearchDTO.gas = null;
+    this.selectedSearchDTO.transmission = this.selectedTrans;
+    console.log(this.selectedSearchDTO);
+
+    this.homeService.findCarsBySearchAdvanced(this.selectedSearchDTO).subscribe(response => this.cars = response);
+  }
 
   getCarsBySearch(){
     this.selectedSearchDTO.place = this.selectedPlace;
@@ -65,6 +119,13 @@ export class HomeComponent implements OnInit {
   moreInfo(adId: number){
     // this.homeService.moreInfo(adId)
     this.router.navigate(['ad-more-info/' + adId]);
+  }
+  onCheckboxChange(e) {
+    if(e.target.checked){
+      this.searchChoose = true;
+    }else{
+      this.searchChoose = false;
+    }
   }
 
 }

@@ -36,7 +36,76 @@
 <br/><br/>
 <div id="search-form" align="center">
 
-  <form (ngSubmit)="getCarsBySearch()">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <input type="checkbox" (change)="onCheckboxChange($event)">
+    <label for="">Advanced search?</label>
+ </div>
+ <form *ngIf="searchChoose" (ngSubmit)="getCarsBySearchAdvanced()">
+  <div class="form-group">
+  <table align="center">
+    <tr>
+      <th>Brand</th>
+      <th>Model</th>
+      <th>Gas type</th>
+      <th>Transmission type</th>
+      <th>Price</th>
+      <th>Km amount</th>
+      <th>Planned Km amount</th>
+      <th>CDW</th>
+      <th>Kids seats</th>
+    </tr>
+    <tr>
+      <th>
+        <input type="text" id="brand" class="form-control" [(ngModel)]="selectedBrand" [ngModelOptions]="{standalone: true}">
+      </th>
+      <th>
+        <input type="text" id="model" class="form-control" [(ngModel)]="selectedModel" [ngModelOptions]="{standalone: true}">
+      </th>
+      <th>
+        <select name="" id="gasType"  [(ngModel)]="selectedGas" [ngModelOptions]="{standalone: true}">
+          <option selected value="Diesel">Diesel</option>
+          <option value="Electricity">Electricity</option>
+          <option value="Gaseline">Gaseline</option>
+        </select>
+      </th>
+      <th>
+        <select name="" id="transmissionType"  [(ngModel)]="selectedTrans" [ngModelOptions]="{standalone: true}">
+          <option selected value="Automatic">Automatic</option>
+          <option value="Manual">Manual</option>
+        </select>
+      </th>
+      <th>
+        <input type="number"  class="form-control" [(ngModel)]="selectedPrice1" [ngModelOptions]="{standalone: true}">
+        <input type="number"  class="form-control" [(ngModel)]="selectedPrice2" [ngModelOptions]="{standalone: true}">
+      </th>
+      <th>
+        <input type="number" class="form-control" [(ngModel)]="selectedKMAmount" [ngModelOptions]="{standalone: true}">
+      </th>
+      <th>
+        <input type="number" class="form-control" [(ngModel)]="selectedPlannedKMAmount" [ngModelOptions]="{standalone: true}">
+      </th>
+      <th>
+        <input type="checkbox"  class="form-control" [(ngModel)]="selectedCDW" [ngModelOptions]="{standalone: true}">
+      </th>
+      <th>
+        <input type="number" class="form-control" [(ngModel)]="selectedKidsSeats" [ngModelOptions]="{standalone: true}">
+      </th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>
+        <button class="btn-search" id="btn-search"  type="submit">
+          SEARCH
+        </button>
+      </th>
+    </tr>
+  </table>
+  </div>
+</form>
+  <form *ngIf="!searchChoose" (ngSubmit)="getCarsBySearch()">
     <div class="form-group">
     <table align="center">
       <tr>

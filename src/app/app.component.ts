@@ -19,6 +19,9 @@ export class AppComponent implements OnInit{
     localStorage.clear();
     this.router.navigate(['home']);
   }
+  goPermission(){
+    this.router.navigate(['permission']);
+  }
   goHome(){
     this.router.navigate(['home']);
   }
