@@ -118,6 +118,7 @@
               <th>Add occupation</th>
               <th>Delete</th>
               <th>Show comments</th>
+              <th>Discount</th>
             </tr>
           </thead>
 
@@ -129,10 +130,19 @@
               <th><button class="btn-add" (click)="addOccupation(car.id)">Add</button></th>
               <th><button class="btn-delete" (click)="deleteCar(car.id)">Delete</button></th>
               <th><button (click)="getReportsForVehicle(car.id, car.brand+' '+car.model)">Show comments</button></th>
+              <th><button (click)="showDiscounts(car.id)">Show discount</button></th>
             </tr>
           </tbody>
-
         </table>
+        <br><br><br>
+  <form *ngIf="showDiscount">
+    <h3>Add discount</h3>
+    <input type="number" [(ngModel)]="discount"
+    [ngModelOptions]="{standalone: true}" placeholder="Discount">
+    <input type="number" [(ngModel)]="howManydays"
+    [ngModelOptions]="{standalone: true}" placeholder="How many days">
+    <button (click)="addDiscount()">Add discount to car</button>
+  </form>
       </div>
     </td>
     <td>
@@ -293,6 +303,7 @@
 
     </table>
   </div>
+  
 
 
   <div id="pendingMyRequests" [hidden]="hideMyRequestsPending">

@@ -23,6 +23,10 @@ export class MyProfileComponent implements OnInit {
   selectedEndingDate: Date;
   userName: string;
   reservation: ReservationDTO;
+  showDiscount : boolean;
+  selectedCarId : number;
+  discount:number;
+  howManydays:number;
 
   showMyAds: boolean;
   showMyRequests: boolean;
@@ -85,6 +89,9 @@ export class MyProfileComponent implements OnInit {
     this.hideMyAdsRequests = true;
 
     this.reports = new Set<VehicleReportDTO>();
+    this.showDiscount = false;
+
+
   }
 
   ngOnInit(): void {
@@ -137,6 +144,24 @@ export class MyProfileComponent implements OnInit {
   }
   public deleteCar(carId: number){
 
+  }
+
+  public showDiscounts(carId: number){
+    this.selectedCarId = carId;
+    this.showDiscount = true;
+  }
+
+  public addDiscount(){
+    if(this.discount == null || this.howManydays == null){
+      alert("You must enter a fields..");
+    }else {
+      this.myProfileService.addDiscountToCar(this.selectedCarId,this.discount,this.howManydays).subscribe(result => {
+        alert("You add a discount for this car..");
+        this.selectedCarId = null;
+        this.showDiscount = false;
+        this.howManydays = null;
+      });;
+    }
   }
 
   public showMyAdsFuncion(){
