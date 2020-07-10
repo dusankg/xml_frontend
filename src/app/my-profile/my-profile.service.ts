@@ -24,6 +24,8 @@ export class MyProfileService {
 
   changePasswordURL: string;
 
+  addDiscountToCarURL: string;
+
   constructor(private http: HttpClient) {
     this.getAllCarsURL = 'http://localhost:8079/vehicle-service/vehicle/user';
     this.reservationURL = 'http://localhost:8079/vehicle-service/vehicle/reserve';
@@ -36,6 +38,8 @@ export class MyProfileService {
     this.reportURL = 'http://localhost:8079/report-service/reports';
 
     this.changePasswordURL = 'http://localhost:8079/login-service/password';
+
+    this.addDiscountToCarURL = 'http://localhost:8079/vehicle-service/vehicle/addDiscountToCar/'
   }
 
   public addOccupation(reservation: ReservationDTO){
@@ -51,6 +55,9 @@ export class MyProfileService {
 
   public getMyRequestsPending(){
     return this.http.get<any>(this.myRequestsURL + '/pending');
+  }
+  public addDiscountToCar(id:number,discount:number,howmany:number){
+    return this.http.get<any>(this.addDiscountToCarURL + id + "/" +discount+"/"+howmany);
   }
   public getMyRequestsApproved(){
     return this.http.get<any>(this.myRequestsURL + '/approved');

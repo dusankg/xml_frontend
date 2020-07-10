@@ -20,7 +20,7 @@
   <button class="button-head" *ngIf="someoneLoggedIn" (click)="goHome()">HOME</button>
   <button class="button-head" *ngIf="clientLoggedIn" (click)="goBasket()">BASKET</button>
   <button class="button-head" *ngIf="someoneLoggedIn" (click)="goMyPage()">MY PROFILE</button>
-  <button class="button-head" *ngIf="clientLoggedIn" (click)="goAddCar()">PLACE AD</button>
+  <button class="button-head" *ngIf="someoneLoggedIn" (click)="goAddCar()">PLACE AD</button>
   <button class="button-head"  *ngIf="adminLoggedIn" (click)="goAdminPage()">ADMIN PAGE</button>
   <button class="button-head"  *ngIf="adminLoggedIn" (click)="goPermission()">PERMISSION PAGE</button>
   <span style="float:right;">
@@ -28,7 +28,7 @@
       <button class="button-head" *ngIf="!someoneLoggedIn" (click)="goLogin()">LOGIN</button>
       <button class="button-head" *ngIf="someoneLoggedIn" (click)="logout()">Log out</button>
 
-    </span>
+  </span>
 </header>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
