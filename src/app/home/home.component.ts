@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
   selectedPlannedKMAmount : number;
   selectedCDW : boolean;
   selectedKidsSeats : number;
+  
+  dateInputValid : string;
 
   userName: string;
   cartItem: CartItem;
@@ -39,7 +41,12 @@ export class HomeComponent implements OnInit {
 
   sortPriceAcs: boolean;
   sortBrandAcs: boolean;
-  constructor(private loginService: LoginService, private basketService: BasketService, private  homeService: HomeService, private router: Router) { }
+  constructor(private loginService: LoginService, private basketService: BasketService, private  homeService: HomeService, private router: Router) {  
+    let date = new Date();
+    let currentDate = new Date().getDate() + 2;
+    date.setDate(currentDate);
+    this.dateInputValid = date.toISOString().slice(0,10).replace(/-/g,"-");
+  }
 
   ngOnInit(): void {
     this.selectedSearchDTO = new SearchDTO();

@@ -119,7 +119,7 @@
         </th>
 
         <th>
-        <input type="date" id="startingDate" class="form-control"required
+        <input type="date" id="startingDate" min="{{this.dateInputValid}}" class="form-control"required
                [(ngModel)]="selectedStartDate"
                [ngModelOptions]="{standalone: true}"
                ng-model="ddd"
@@ -128,7 +128,7 @@
         />
         </th>
         <th>
-        <input type="date" id="endingDate" class="form-control" required
+        <input type="date" id="endingDate" min="{{this.dateInputValid}}" class="form-control" required
                [(ngModel)]="selectedEndDate"
                [ngModelOptions]="{standalone: true}"
                ng-model="ddd"
