@@ -109,13 +109,13 @@
     <div class="form-group">
     <table align="center">
       <tr>
-        <th>City</th>
+        <th></th>
         <th>Starting date</th>
         <th>Ending date</th>
       </tr>
       <tr>
         <th>
-        <input type="text" placeholder="City" id="city" [(ngModel)]="selectedPlace" class="form-control" [ngModelOptions]="{standalone: true}">
+        <input *ngIf="false" type="text" placeholder="City" id="city" [(ngModel)]="selectedPlace" class="form-control" [ngModelOptions]="{standalone: true}">
         </th>
 
         <th>
