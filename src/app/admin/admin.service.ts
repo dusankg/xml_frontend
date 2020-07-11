@@ -42,8 +42,8 @@ export class AdminService {
     this.createBrandUrl = 'http://localhost:8079/admin-service/brand/';
     this.createModelUrl = 'http://localhost:8079/admin-service/model/';
     this.createFuelTypeUrl = 'http://localhost:8079/admin-service/fueltype/';
-    this.createTransmissionUrl = 'http://localhost:8079/admin-service/transmission/create';
-    this.createClassUrl = 'http://localhost:8079/admin-service/vehicleclass/create';
+    this.createTransmissionUrl = 'http://localhost:8079/admin-service/transmission';
+    this.createClassUrl = 'http://localhost:8079/admin-service/vehicleclass';
 
     this.getAllBrandUrl = 'http://localhost:8079/admin-service/brand/';
     this.getAllModelUrl = 'http://localhost:8079/admin-service/model/';
