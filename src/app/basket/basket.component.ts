@@ -15,6 +15,7 @@ export class BasketComponent implements OnInit {
   bundleRequests: Set<BundleQueryDTO>;
 
   hidden: boolean;
+  public emptyCart: boolean;
   constructor(private basketService: BasketService) {
     this.cartItems = new Set<CartItem>();
     this.bundleRequests  = new Set<BundleQueryDTO>();
@@ -46,12 +47,15 @@ export class BasketComponent implements OnInit {
     }
   }
   getCartItems(){
-    this.basketService.getCartItems().subscribe(response => this.cartItems = response);
+    this.basketService.getCartItems().subscribe(response => {
+      this.cartItems = response;
+    }
+      );
     console.log(this.cartItems);
   }
 
   deleteCartItem(itemID: number){
-    this.basketService.deleteCartItem(itemID).subscribe( () => {location.reload(); });
+    this.basketService.deleteCartItem(itemID).subscribe( () => {this.getCartItems(); });
   }
 
   public changeBundle(owner: string){
@@ -67,6 +71,10 @@ export class BasketComponent implements OnInit {
   }
 
   public placeOrder(){
+    if(this.cartItems.size == 0){
+      alert("Cart is empty");
+      return;
+    }
     let query = new PurchaseCartDTO();
     //query.bundleQuery = new Map<string, string>();
 
@@ -84,8 +92,13 @@ export class BasketComponent implements OnInit {
     const string = [...map].map(([key, value]) => `${key}:${value}`).join(', ');
 
     query.bundleQuery = obj;
-    this.basketService.placeOrder(query).subscribe();
-    location.reload();
+    this.basketService.placeOrder(query).subscribe( next => {
+      this.getCartItems();
+      this.bundleRequests  = new Set<BundleQueryDTO>();
+      this.hidden = true;
+    });
+    //location.reload();
   }
 
+  
 }
