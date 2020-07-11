@@ -8,11 +8,11 @@ export class GpsMapService {
   updateCoords: string;
 
   constructor(private http: HttpClient) {
-    this.updateCoords = 'http://localhost:8090/coordinates';
+    this.updateCoords = 'http://localhost:8079/gps-service/coordinates';
   }
 
   updateCoordinates(id: number): Observable<any>{
-    return this.http.get<VehicleGpsDTO>(this.updateCoords+'/'+id);
+    return this.http.get<VehicleGpsDTO>(this.updateCoords + '/' + id);
   }
 
 
