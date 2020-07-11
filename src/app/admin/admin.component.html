@@ -57,7 +57,7 @@
     <tr bgcolor = green >
       <th>Username</th>
       <th>Active</th>
-      <th>Block/Activate</th>
+      <th>Block</th>
       <th>Delete</th>
 
     </tr>
@@ -67,6 +67,13 @@
       <td>{{user.active}}</td>
       <th><button class="btn-block" (click)="blockUser(user.username)">Block</button></th>
       <th><button class="btn-delete" (click)="deleteUser(user.username)">Delete</button></th>
+    </tr>
+
+    <tr>
+      <th>/</th>
+      <th>/</th>
+      <th>/</th>
+      <th>/</th>
     </tr>
 
     <tr *ngFor="let user of nonActiveUsers" >

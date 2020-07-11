@@ -82,10 +82,11 @@ export class AdminService {
     return this.http.post<any>(this.createFuelTypeUrl , fuelType);
   }
   public addNewTransmission(transmission: TransmissionTypeDTO): Observable<any>{
+    console.log(transmission.name);
     return this.http.post<any>(this.createTransmissionUrl , transmission);
   }
   public addNewClass(vehicleClass: VehicleClass): Observable<any>{
-    return this.http.post<any>(this.createClassUrl , vehicleClass);
+    return this.http.post<any>(this.createClassUrl, vehicleClass);
   }
 
   public addNewModel(model: ModelDTO): Observable<any>{

@@ -37,6 +37,8 @@ export class HomeComponent implements OnInit {
   cartItem: CartItem;
   searchChoose : boolean;
 
+  sortPriceAcs: boolean;
+  sortBrandAcs: boolean;
   constructor(private loginService: LoginService, private basketService: BasketService, private  homeService: HomeService, private router: Router) { }
 
   ngOnInit(): void {
@@ -44,6 +46,8 @@ export class HomeComponent implements OnInit {
     this.cartItem = new CartItem();
     this.cars = new Set<VehicleDTO>();
     this.searchChoose = false;
+    this.sortBrandAcs = true;
+    this.sortPriceAcs = true;
     this.getAllCars();
   }
 
@@ -126,6 +130,38 @@ export class HomeComponent implements OnInit {
     }else{
       this.searchChoose = false;
     }
+  }
+
+  public sortByBrand(){
+    //this.cars.sort((a,b) => a.title.rendered.localeCompare(b.title.rendered));
+    let array = Array.from(this.cars);
+    if(this.sortBrandAcs){
+      array.sort((a,b) => a.brand.localeCompare(b.brand));
+    } else {
+      array.sort((a,b) => b.brand.localeCompare(a.brand));
+    }
+    this.sortBrandAcs = !this.sortBrandAcs;1
+    this.cars = new Set<ShowVehicleDTO>();
+    for(let car of array){
+      this.cars.add(car);
+    }
+    console.log(array);
+    console.log(this.cars);
+  }
+  public sortByPrice(){
+    let array = Array.from(this.cars);
+    if(this.sortPriceAcs){
+      array.sort((a,b) => a.price - b.price);
+    } else {
+      array.sort((a,b) => b.price - a.price);
+    }
+    this.sortPriceAcs = !this.sortPriceAcs;
+    this.cars = new Set<ShowVehicleDTO>();
+    for(let car of array){
+      this.cars.add(car);
+    }
+    console.log(array);
+    console.log(this.cars);
   }
 
 }
