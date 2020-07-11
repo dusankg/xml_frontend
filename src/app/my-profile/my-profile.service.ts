@@ -9,6 +9,7 @@ import {SendMessageDTO} from '../model/SendMessageDTO';
 import {ReportDTO} from '../model/ReportDTO';
 import {ChangePasswordDTO} from '../model/ChangePasswordDTO';
 import { AgentVehicleReportDTO } from '../model/AgentVehicleReportDTO';
+import { Occupation } from '../model/Occupation';
 
 
 @Injectable()
@@ -32,6 +33,8 @@ export class MyProfileService {
 
   getMostPriceCarURL : string;
 
+  reserveVehicleUrl: string;
+
   constructor(private http: HttpClient) {
     this.getAllCarsURL = 'http://localhost:8079/vehicle-service/vehicle/user';
     this.reservationURL = 'http://localhost:8079/vehicle-service/vehicle/reserve';
@@ -51,6 +54,8 @@ export class MyProfileService {
     this.getMostKmCarURL = 'http://localhost:8079/vehicle-service/vehicle/getMostKmCar';
 
     this.getMostPriceCarURL = 'http://localhost:8079/vehicle-service/vehicle/getMostPriceCar';
+
+    this.reserveVehicleUrl = 'http://localhost:8079/vehicle-service/vehicle/reserve';
 
   }
 
@@ -129,5 +134,9 @@ export class MyProfileService {
   public sendAgentReport(report: AgentVehicleReportDTO){
     console.log(report);
     return this.http.post<any>(this.agentReportURL, report);
+  }
+
+  public reserveVehicle(occupation: ReservationDTO){
+    return this.http.post<any>(this.reserveVehicleUrl, occupation);
   }
 }
