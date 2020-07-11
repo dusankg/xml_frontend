@@ -198,6 +198,7 @@ export class MyProfileComponent implements OnInit {
         this.selectedCarId = null;
         this.showDiscount = false;
         this.howManydays = null;
+        this.updateData();
       });;
     }
   }
@@ -428,5 +429,13 @@ export class MyProfileComponent implements OnInit {
   public openReportBoxOnMyAd(vehicleId: number){
     this.myAdReportVehicleId = vehicleId;
     this.hideOnMyAdsReportBox = false;
+  }
+  public get agentLoggedIn(){
+    if (localStorage.getItem('role') === 'ROLE_COMPANY'){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

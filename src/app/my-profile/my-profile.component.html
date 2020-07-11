@@ -279,7 +279,7 @@
         <td>
           <table>
             <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}
-              <button (click)="openReportBoxOnMyAd(vehicle.vehicle_id)">Send report</button>
+              <button *ngIf="agentLoggedIn" (click)="openReportBoxOnMyAd(vehicle.vehicle_id)">Send report</button>
             </tr>
           </table>
         </td>

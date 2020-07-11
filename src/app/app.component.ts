@@ -70,5 +70,13 @@ export class AppComponent implements OnInit{
       return false;
     }
   }
+  get agentLoggedIn(){
+    if (localStorage.getItem('role') === 'ROLE_COMPANY'){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
 }
