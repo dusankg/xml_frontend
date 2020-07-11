@@ -24,6 +24,12 @@ import { AdminService } from './admin/admin.service';
 import { RegisterComponent } from './register/register.component';
 import { RegisterService } from './register/register.service';
 import { PermissionComponent } from './permission/permission.component';
+import { GpsMapComponent } from './gps-map/gps-map.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { AgmCoreModule } from '@agm/core';
+import { GpsMapService } from './gps-map/gps-map.service';
+
+
 
 @NgModule({
   declarations: [
@@ -37,14 +43,19 @@ import { PermissionComponent } from './permission/permission.component';
     AdminComponent,
     RegisterComponent,
     PermissionComponent,
+    GpsMapComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC5cvBMJ5lBWU7UXMVDc5wpzDh91ELs_ck'
+    })
   ],
-  providers: [ LoginService, AddCarService, BasketService, HomeService, AdMoreInfoService, MyProfileService, AdminService, RegisterService,
+  providers: [ LoginService, AddCarService, BasketService, HomeService, AdMoreInfoService, MyProfileService,
+    AdminService, RegisterService, GpsMapService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

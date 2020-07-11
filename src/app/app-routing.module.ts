@@ -9,6 +9,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { AdminComponent } from './admin/admin.component';
 import { RegisterComponent } from './register/register.component';
 import { PermissionComponent } from './permission/permission.component';
+import { GpsMapComponent } from './gps-map/gps-map.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'permission', component: PermissionComponent},
+  {path: 'gps', component: GpsMapComponent},
 ];
 
 @NgModule({
