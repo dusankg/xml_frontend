@@ -28,6 +28,9 @@ export class MyProfileComponent implements OnInit {
   discount:number;
   howManydays:number;
 
+  mostKmCar : string;
+  mostPriceCar : string;
+
   showMyAds: boolean;
   showMyRequests: boolean;
   showRequestsOnMyAds: boolean;
@@ -111,6 +114,16 @@ export class MyProfileComponent implements OnInit {
     this.hideReportBox = true;
     this.hideChangePasswordBox = true;
     this.updateData();
+
+    this.getMostKmCar();
+    this.getMostPriceCar();
+  }
+
+  getMostKmCar(){
+    this.myProfileService.getMostKmCar().subscribe(response => this.mostKmCar = response.brand + " " + response.model);
+  }
+  getMostPriceCar(){
+    this.myProfileService.getMostPriceCar().subscribe(response => this.mostPriceCar = response.brand + " " + response.model);
   }
 
   updateData(){

@@ -26,6 +26,10 @@ export class MyProfileService {
 
   addDiscountToCarURL: string;
 
+  getMostKmCarURL : string;
+
+  getMostPriceCarURL : string;
+
   constructor(private http: HttpClient) {
     this.getAllCarsURL = 'http://localhost:8079/vehicle-service/vehicle/user';
     this.reservationURL = 'http://localhost:8079/vehicle-service/vehicle/reserve';
@@ -39,7 +43,12 @@ export class MyProfileService {
 
     this.changePasswordURL = 'http://localhost:8079/login-service/password';
 
-    this.addDiscountToCarURL = 'http://localhost:8079/vehicle-service/vehicle/addDiscountToCar/'
+    this.addDiscountToCarURL = 'http://localhost:8079/vehicle-service/vehicle/addDiscountToCar/';
+
+    this.getMostKmCarURL = 'http://localhost:8079/vehicle-service/vehicle/getMostKmCar';
+
+    this.getMostPriceCarURL = 'http://localhost:8079/vehicle-service/vehicle/getMostPriceCar';
+
   }
 
   public addOccupation(reservation: ReservationDTO){
@@ -47,6 +56,14 @@ export class MyProfileService {
     console.log('Dodavanje occupationa za auto: ' + reservation.id + reservation.start + reservation.end);
 */
     return this.http.post<ReservationDTO>(this.reservationURL, reservation);
+  }
+
+  public getMostKmCar(): Observable<any>{
+    return this.http.get<any>(this.getMostKmCarURL);
+  }
+
+  public getMostPriceCar(): Observable<any>{
+    return this.http.get<any>(this.getMostPriceCarURL);
   }
 
   public getAllCars(): Observable<any>{
