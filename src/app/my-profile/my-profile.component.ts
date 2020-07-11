@@ -11,6 +11,7 @@ import {VehicleReportDTO} from '../model/VehicleReportDTO';
 import {ChangePasswordDTO} from '../model/ChangePasswordDTO';
 import {Router} from '@angular/router';
 import { AgentVehicleReportDTO } from '../model/AgentVehicleReportDTO';
+import { Occupation } from '../model/Occupation';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -87,6 +88,9 @@ export class MyProfileComponent implements OnInit {
   onMyAdsFinished: Set<RequestDTO>;
   myAdReportVehicleId: number;
 
+  public hideOccupationBox: boolean;
+  public occupationVehicleId: number;
+
   constructor(private myProfileService: MyProfileService, private homeService: HomeService, private  router: Router) {
     this.cars = new Set<VehicleDTO>();
     this.usersCars = new Set<VehicleDTO>();
@@ -108,6 +112,8 @@ export class MyProfileComponent implements OnInit {
     this.reports = new Set<VehicleReportDTO>();
     this.onMyAdsFinished = new Set<RequestDTO>();
     this.showDiscount = false;
+
+    this.hideOccupationBox = true;
   }
 
   ngOnInit(): void {
@@ -437,5 +443,23 @@ export class MyProfileComponent implements OnInit {
     else {
       return false;
     }
+  }
+
+  public openOccupationBox(vehicleId: number){
+    this.hideOccupationBox = false;
+    this.occupationVehicleId = vehicleId;
+  }
+
+  public enterOccupation(){
+    let reservation = new ReservationDTO();
+    reservation.id = this.occupationVehicleId;
+    reservation.start = this.selectedStartingDate;
+    reservation.end = this.selectedEndingDate;
+
+    this.myProfileService.reserveVehicle(reservation).subscribe(next => {
+      this.hideOccupationBox = true;
+      this.occupationVehicleId = -1;
+    });
+
   }
 }
