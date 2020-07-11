@@ -15,11 +15,11 @@ import { VehicleGpsDTO } from '../model/VehicleGpsDTO';
 export class GpsMapComponent implements OnInit {
 
   subscription: Subscription;
- 
+
   lat: number = 45.25738;
   lng: number = 19.83406;
   zoom: number = 15;
-  source = interval(5000);
+  source = interval(3000);
   vehicleGps: VehicleGpsDTO;
 
   constructor(private service: GpsMapService, private  router: Router) {
@@ -32,9 +32,9 @@ export class GpsMapComponent implements OnInit {
   }
 
   updateCoordinates(){
-      //this.service.updateCoordinates(1).subscribe(response => {this.lat = response.latitude; this.lng = response.longitude;})
-      this.lat = 45.26112;
-      this.lng= 19.82653;
+      this.service.updateCoordinates(6).subscribe(response => {this.lat = response.latitude; this.lng = response.longitude;})
+      //this.lat = 45.26112;
+      //this.lng = 19.82653;
     }
 
 }
