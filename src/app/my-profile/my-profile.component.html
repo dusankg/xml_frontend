@@ -182,11 +182,13 @@
 
 <div id="myAdsRequestButtons" [hidden]="showMyRequests">
   <br/>
-  <button (click)="changeMyAdsRequestsView()">{{myAdsRequestButtonString}}</button>
+  <button (click)="showOnMyAdsPending()">Pending</button>
+  <button (click)="showOnMyAdsUpcoming()">Upcoming</button>
+  <button (click)="showOnMyAdsFinished()">Finished</button>
 </div>
 <div id="requestOnMyAds" [hidden]="showMyRequests" align="center">
   <br/>
-  <div id="myAdsRequestsPending" [hidden]="!hideMyAdsRequests">
+  <div id="myAdsRequestsPending" [hidden]="hideOnMyAdsPending">
     <h2>Pending requests</h2>
     <table class="table-main" align="center">
       <thead>
@@ -219,7 +221,7 @@
     </table>
   </div>
 
-  <div id="myAdsRequestsUpcoming" [hidden]="hideMyAdsRequests">
+  <div id="myAdsRequestsUpcoming" [hidden]="hideOnMyAdsUpcoming">
     <h2>Upcoming requests</h2>
     <table class="table-main" align="center">
       <thead>
@@ -247,6 +249,46 @@
 
     </table>
   </div>
+
+  <div id="onMyAdsFinished" align="center" [hidden]="hideOnMyAdsFinished">
+    
+    <div id="sendReportOnMyAd" [hidden]="hideOnMyAdsReportBox" align="center">
+      <h3>Send report: {{sendReportTo}} </h3>
+      Comment: <input [(ngModel)]="reportTextOnMyAd"/><br/>
+      Kilometers: <input type="number" [(ngModel)]="kilometers"/><br/>
+      <button (click)="sendReportOnMyAd()" class="btn-send">Send report</button>
+    </div>
+
+    <h2>My finished requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let request of onMyAdsFinished" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}
+              <button (click)="openReportBoxOnMyAd(vehicle.vehicle_id)">Send report</button>
+            </tr>
+          </table>
+        </td>
+
+      </tr>
+      </tbody>
+
+    </table>
+    </div>
 </div>
 
 
@@ -254,6 +296,7 @@
   <br/>
   <button (click)="showMyApproved()">Approved</button>
   <button (click)="showMyPending()">Pending</button>
+  <button (click)="showMyFinished()">Finished</button>
   <button (click)="showMyRejected()">Rejected</button>
 </div>
 <div id="sendMessage" [hidden]="hideMessageBox" align="center">
@@ -268,14 +311,6 @@
 
 
   <div id="approvedMyRequests" [hidden]="hideMyRequestsApproved">
-
-    <div id="sendReport" [hidden]="hideReportBox" align="center">
-      <h3>Send report: {{sendReportTo}} </h3>
-      Comment: <input [(ngModel)]="reportText"/><br/>
-      Rating: <input type="number" max="5" min="1" [(ngModel)]="rating"/><br/>
-      <button (click)="sendReport()" class="btn-send">Send report</button>
-    </div>
-
     <h2>Approved requests</h2>
     <table class="table-main" align="center">
       <thead>
@@ -296,14 +331,12 @@
         <td>
           <table>
             <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}
-              <button (click)="openReportBox(vehicle.vehicle_id)">Send report</button>
             </tr>
           </table>
         </td>
         <td>
           <button (click)="openMesasgeBox(request.owner_username)">Send message</button>
         </td>
-
       </tr>
       </tbody>
 
@@ -371,6 +404,49 @@
 
     </table>
   </div>
+
+  <div id="MyFinished" align="center" [hidden]="hideMyFinished">
+    
+    <div id="sendReport" [hidden]="hideReportBox" align="center">
+      <h3>Send report: {{sendReportTo}} </h3>
+      Comment: <input [(ngModel)]="reportText"/><br/>
+      Rating: <input type="number" max="5" min="1" [(ngModel)]="rating"/><br/>
+      <button (click)="sendReport()" class="btn-send">Send report</button>
+    </div>
+
+    <h2>My finished requests</h2>
+    <table class="table-main" align="center">
+      <thead>
+      <tr>
+      <tr bgcolor = green >
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Status</th>
+        <th>Vehicles</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let request of myRequestsFinished" >
+        <td>{{request.id}}</td>
+        <td>{{request.owner_username}}</td>
+        <td>{{request.status}}</td>
+        <td>
+          <table>
+            <tr *ngFor="let vehicle of request.vehicles"> {{vehicle.vehicle_name}}; {{vehicle.time_span.startDate | date: 'mediumDate'}}, {{vehicle.time_span.endDate | date: 'mediumDate'}}
+              <button (click)="openReportBox(vehicle.vehicle_id)">Send report</button>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <button (click)="openMesasgeBox(request.owner_username)">Send message</button>
+        </td>
+
+      </tr>
+      </tbody>
+
+    </table>
+    </div>
 </div>
 
 

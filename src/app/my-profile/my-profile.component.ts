@@ -73,6 +73,19 @@ export class MyProfileComponent implements OnInit {
   newPassword: string;
   repeatNewPassword: string;
 
+  hideMyFinished: boolean;
+  myRequestsFinished: Set<RequestDTO>;
+
+  hideOnMyAdsPending: boolean;
+  hideOnMyAdsUpcoming: boolean;
+  hideOnMyAdsFinished: boolean;
+
+  hideOnMyAdsReportBox: boolean;
+  reportTextOnMyAd: string;
+  kilometers: number;
+  onMyAdsFinished: Set<RequestDTO>;
+  myAdReportVehicleId: number;
+
   constructor(private myProfileService: MyProfileService, private homeService: HomeService, private  router: Router) {
     this.cars = new Set<VehicleDTO>();
     this.usersCars = new Set<VehicleDTO>();
@@ -92,9 +105,8 @@ export class MyProfileComponent implements OnInit {
     this.hideMyAdsRequests = true;
 
     this.reports = new Set<VehicleReportDTO>();
+    this.onMyAdsFinished = new Set<RequestDTO>();
     this.showDiscount = false;
-
-
   }
 
   ngOnInit(): void {
@@ -113,6 +125,15 @@ export class MyProfileComponent implements OnInit {
 
     this.hideReportBox = true;
     this.hideChangePasswordBox = true;
+
+    this.hideMyFinished = true;
+
+    this.hideOnMyAdsFinished = true;
+    this.hideOnMyAdsPending = false;
+    this.hideOnMyAdsUpcoming = true;
+
+    this.hideOnMyAdsReportBox = true;
+    
     this.updateData();
 
     this.getMostKmCar();
@@ -130,13 +151,16 @@ export class MyProfileComponent implements OnInit {
     this.getAllCars();
     this.getMyRequestsPending();
     this.getMyRequestsApproved();
-    this.getMyRequestsRejected()
+    this.getMyRequestsRejected();
+    this.getMyRequestsFinished();
 
     this.getRequestOnMyAdsPending();
     this.getRequestOnMyAdsUncoming();
 
     this.getSentMessages();
     this.getReceivedMessages();
+
+    this.getRequestOnMyAdsFinished();
   }
 
   getAllCars(){
@@ -184,6 +208,8 @@ export class MyProfileComponent implements OnInit {
     this.hideMessageBox = true;
     this.messageText = '';
     this.hideMessages = true;
+    this.hideOnMyAdsReportBox = true;
+
   }
   public showMyRequestsFuncion(){
     this.showMyAds = true;
@@ -192,6 +218,8 @@ export class MyProfileComponent implements OnInit {
     this.hideMessageBox = true;
     this.messageText = '';
     this.hideMessages = true;
+    this.hideOnMyAdsReportBox = true;
+
   }
   public showRequestsOnMyAdsFuncion(){
     this.showMyAds = true;
@@ -200,9 +228,12 @@ export class MyProfileComponent implements OnInit {
     this.hideMessageBox = true;
     this.messageText = '';
     this.hideMessages = true;
+    this.hideOnMyAdsReportBox = true;
   }
   public showChangePasswordBox(){
     this.hideChangePasswordBox = false;
+    this.hideOnMyAdsReportBox = true;
+
   }
   getMyRequestsPending(){
     this.myProfileService.getMyRequestsPending().subscribe(response => this.myRequestsPending = response);
@@ -212,6 +243,9 @@ export class MyProfileComponent implements OnInit {
   }
   getMyRequestsRejected(){
     this.myProfileService.getMyRequestsRejected().subscribe(response => this.myRequestsRejected = response);
+  }
+  getMyRequestsFinished(){
+    this.myProfileService.getMyRequestsFinished().subscribe(response => this.myRequestsFinished = response);
   }
   getRequestOnMyAdsPending(){
     this.myProfileService.getRequestsOnMyAdsPending().subscribe(response => this.requestsOnMyAdsPending = response);
@@ -224,13 +258,22 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
+  getRequestOnMyAdsFinished(){
+    this.myProfileService.getRequestsOnMyAdsFinished().subscribe(response => this.onMyAdsFinished = response, error => {
+      if(error.status === 401){
+        alert("You have not request permission");
+      }
+    });
+  }
+
   public approveRequest(id: number){
-    this.myProfileService.approveRequest(id).subscribe();
-    this.updateData();
+    this.myProfileService.approveRequest(id).subscribe(next => {
+      this.updateData();
+    });
+   
   }
   public rejectRequest(id: number){
-    this.myProfileService.rejectRequest(id).subscribe();
-    this.updateData();
+    this.myProfileService.rejectRequest(id).subscribe(next =>  this.updateData());   
   }
 
   public openMesasgeBox(owner: string){
@@ -245,9 +288,12 @@ export class MyProfileComponent implements OnInit {
     messageSend.receiver = this.sendMessageTo;
     messageSend.text = this.messageText;
     console.log("Iz component.ts: " + messageSend.text)
-    this.myProfileService.sendMessage(messageSend).subscribe();
-    this.messageText = '';
-    this.updateData();
+    this.myProfileService.sendMessage(messageSend).subscribe(next => {
+          this.messageText = '';
+          this.getSentMessages();
+          this.getReceivedMessages();
+    });
+
   }
 
   public getSentMessages(){
@@ -281,25 +327,46 @@ export class MyProfileComponent implements OnInit {
     this.hideMyRequestsApproved = false;
     this.hideMyRequestsRejected = true;
     this.hideMyRequestsPending = true;
+    this.hideMyFinished = true;
   }
   public showMyPending(){
     this.hideMyRequestsApproved = true;
     this.hideMyRequestsRejected = true;
     this.hideMyRequestsPending = false;
+    this.hideMyFinished = true;
+
   }
   public showMyRejected(){
     this.hideMyRequestsApproved = true;
     this.hideMyRequestsRejected = false;
     this.hideMyRequestsPending = true;
+    this.hideMyFinished = true;
+
+  }
+  public showMyFinished(){
+    this.hideMyRequestsApproved = true;
+    this.hideMyRequestsRejected = true;
+    this.hideMyRequestsPending = true;
+    this.hideMyFinished = false;
+  }
+  
+
+  public showOnMyAdsPending(){
+    this.hideOnMyAdsPending = false;
+    this.hideOnMyAdsUpcoming = true;
+    this.hideOnMyAdsFinished = true;
   }
 
-  public changeMyAdsRequestsView(){
-    this.hideMyAdsRequests = !this.hideMyAdsRequests;
-    if(!this.hideMyAdsRequests){
-      this.myAdsRequestButtonString = 'Show pending requests';
-    } else {
-      this.myAdsRequestButtonString = 'Show upcoming requests';
-    }
+  public showOnMyAdsUpcoming(){
+    this.hideOnMyAdsPending = true;
+    this.hideOnMyAdsUpcoming = false;
+    this.hideOnMyAdsFinished = true;
+  }
+
+  public showOnMyAdsFinished(){
+    this.hideOnMyAdsPending = true;
+    this.hideOnMyAdsUpcoming = true;
+    this.hideOnMyAdsFinished = false;
   }
 
   public sendReport(){
@@ -309,10 +376,11 @@ export class MyProfileComponent implements OnInit {
     reportSend.vehicle_id = this.sendReportTo;
     reportSend.comment = this.reportText;
     reportSend.rating = this.rating;
-    // todo add subsribe
-    this.myProfileService.sendReport(reportSend).subscribe();
-    this.reportText = '';
-    this.updateData();
+
+    this.myProfileService.sendReport(reportSend).subscribe( next => {
+      this.reportText = '';
+      //this.getMyRequestsFinished(); 
+    });
   }
   public openReportBox(owner: number){
     this.sendReportTo = owner;
@@ -342,5 +410,14 @@ export class MyProfileComponent implements OnInit {
       alert('Passwords does not match');
     }
 
+  }
+
+  public sendReportOnMyAd(){
+    alert('Radi za sada, doradi da salje na back: ' + this.myAdReportVehicleId);
+  }
+
+  public openReportBoxOnMyAd(vehicleId: number){
+    this.myAdReportVehicleId = vehicleId;
+    this.hideOnMyAdsReportBox = false;
   }
 }

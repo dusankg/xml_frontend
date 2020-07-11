@@ -8,6 +8,7 @@ import {MessageDTO} from '../model/MessageDTO';
 import {SendMessageDTO} from '../model/SendMessageDTO';
 import {ReportDTO} from '../model/ReportDTO';
 import {ChangePasswordDTO} from '../model/ChangePasswordDTO';
+import { AgentVehicleReportDTO } from '../model/AgentVehicleReportDTO';
 
 
 @Injectable()
@@ -21,8 +22,9 @@ export class MyProfileService {
   messagesURL: string;
 
   reportURL: string;
-
+  agentReportURL: string;
   changePasswordURL: string;
+  
 
   addDiscountToCarURL: string;
 
@@ -40,6 +42,7 @@ export class MyProfileService {
     this.messagesURL = 'http://localhost:8079/messaging-service/messages';
 
     this.reportURL = 'http://localhost:8079/report-service/reports';
+    this.agentReportURL = 'http://localhost:8079/report-service/agentReports';
 
     this.changePasswordURL = 'http://localhost:8079/login-service/password';
 
@@ -82,12 +85,19 @@ export class MyProfileService {
   public getMyRequestsRejected(){
     return this.http.get<any>(this.myRequestsURL + '/rejected');
   }
+  public getMyRequestsFinished(){
+    return this.http.get<any>(this.myRequestsURL + '/finished');
+  }
   public getRequestsOnMyAdsPending(){
     return this.http.get<any>(this.requestsOnMyAdsURL + '/pending');
   }
   public getRequestsOnMyAdsUncoming(){
     return this.http.get<any>(this.requestsOnMyAdsURL + '/upcoming');
   }
+  public getRequestsOnMyAdsFinished(){
+    return this.http.get<any>(this.requestsOnMyAdsURL + '/finished');
+  }
+
   public approveRequest(id: number){
     return this.http.put<any>(this.requestsOnMyAdsURL + '/approve/' + id, null);
   }
@@ -114,5 +124,10 @@ export class MyProfileService {
   public changePassword(changePasswordDTO: ChangePasswordDTO){
     console.log(changePasswordDTO.newPassword);
     return this.http.put<ChangePasswordDTO>(this.changePasswordURL, changePasswordDTO);
+  }
+
+  public sendAgentReport(report: AgentVehicleReportDTO){
+    console.log(report);
+    return this.http.post<any>(this.agentReportURL, report);
   }
 }

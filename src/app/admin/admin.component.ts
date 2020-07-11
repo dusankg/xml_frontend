@@ -76,6 +76,8 @@ export class AdminComponent implements OnInit {
     this.hideUsers = false;
     this.hideCompanies = true;
     this.updateData();
+    this.getAllUsers();
+    this.getReports();
   }
 
   updateData(){
@@ -83,8 +85,6 @@ export class AdminComponent implements OnInit {
     this.getAllFuelTypes();
     this.getAllTransmissions();
     this.getAllVehicleClasses();
-    this.getAllUsers();
-    this.getReports();
   }
 
   private getAllUsers(){
@@ -93,15 +93,15 @@ export class AdminComponent implements OnInit {
   }
 
   public blockUser(username: string){
-    this.adminService.blockUser(username).subscribe();
-    this.updateData();
-    //window.location.reload();
+    this.adminService.blockUser(username).subscribe( next => {
+      this.getAllUsers();
+    });
   }
 
   public activateUser(username: string){
-    this.adminService.activateUser(username).subscribe();
-    this.updateData();
-    //window.location.reload();
+    this.adminService.activateUser(username).subscribe(next => {
+      this.getAllUsers();
+    });
   }
   public deleteUser(username: string){
     this.adminService.deleteUser(username);
@@ -122,24 +122,19 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllVehicleClasses().subscribe(response => this.vehicleClasses = response);
   }
   public deleteBrand(name: string){
-    this.adminService.deleteBrand(name).subscribe();
-    this.updateData();
+    this.adminService.deleteBrand(name).subscribe(next => this.updateData());
   }
   public deleteFuelType(name: string){
-    this.adminService.deleteFuelType(name).subscribe();
-    this.updateData();
+    this.adminService.deleteFuelType(name).subscribe(next => this.updateData());
   }
   public deleteTransmission(name: string){
-    this.adminService.deleteTransmission(name).subscribe();
-    this.updateData();
+    this.adminService.deleteTransmission(name).subscribe(next => this.updateData());
   }
   public deleteClass(name: string){
-    this.adminService.deleteClass(name).subscribe();
-    this.updateData();
+    this.adminService.deleteClass(name).subscribe(next => this.updateData());
   }
   public deleteModel(name: string){
-    this.adminService.deleteModel(name).subscribe();
-    this.updateData();
+    this.adminService.deleteModel(name).subscribe(next => this.updateData());
   }
 
 
@@ -147,8 +142,9 @@ export class AdminComponent implements OnInit {
     this.newBrandDTO.name = this.newBrandName;
     this.adminService.addNewBrand(this.newBrandDTO).subscribe(result => {
       alert('Successfully');
+      this.newBrandName = '';1
+      this.updateData();
     });
-    window.location.reload();
   }
 
   public addNewModel(){
@@ -157,30 +153,35 @@ export class AdminComponent implements OnInit {
     console.log(this.newModelDTO.modelName, this.newModelDTO.brandName);
     this.adminService.addNewModel(this.newModelDTO).subscribe(result => {
       alert('Successfully');
+      this.newModelName = '';
+      this.updateData();
     });
-    //window.location.reload();
   }
 
   public addNewFuelType(){
     this.newFuelTypeDTO.name = this.newFuelTypeName;
     this.adminService.addNewFuelType(this.newFuelTypeDTO).subscribe(result => {
       alert('Successfully');
+      this.newFuelTypeName = '';
+      this.updateData();
     });
-    this.updateData();
   }
   public addNewTransmission(){
     this.newTransmissionDTO.name = this.newTransmissionName;
+    console.log(this.newTransmissionDTO.name);
     this.adminService.addNewTransmission(this.newTransmissionDTO).subscribe(result => {
       alert('Successfully');
+      this.newTransmissionName = '';
+      this.updateData();
     });
-    this.updateData();
   }
   public addNewClass(){
     this.newVehicleClassDTO.name = this.newClassName;
     this.adminService.addNewClass(this.newVehicleClassDTO).subscribe(result => {
       alert('Successfully');
+      this.newClassName = '';
+      this.updateData();
     });
-    this.updateData();
   }
 
   public showUsers(){
@@ -214,12 +215,14 @@ export class AdminComponent implements OnInit {
   }
 
   public approveComment(id: number){
-    this.adminService.approveComment(id).subscribe();
-    this.updateData();
+    this.adminService.approveComment(id).subscribe( next => {
+      this.getReports()
+    });
   }
   public rejectComment(id: number){
-    this.adminService.rejectComment(id).subscribe();
-    this.updateData();
+    this.adminService.rejectComment(id).subscribe( next => {
+      this.getReports();
+    });
   }
   public registerCompany(){
     let user: UserDTO;
