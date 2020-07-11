@@ -10,6 +10,7 @@ import {ReportDTO} from '../model/ReportDTO';
 import {VehicleReportDTO} from '../model/VehicleReportDTO';
 import {ChangePasswordDTO} from '../model/ChangePasswordDTO';
 import {Router} from '@angular/router';
+import { AgentVehicleReportDTO } from '../model/AgentVehicleReportDTO';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -413,7 +414,15 @@ export class MyProfileComponent implements OnInit {
   }
 
   public sendReportOnMyAd(){
-    alert('Radi za sada, doradi da salje na back: ' + this.myAdReportVehicleId);
+    //alert('Radi za sada, doradi da salje na back: ' + this.myAdReportVehicleId);
+    let report = new AgentVehicleReportDTO();
+    report.comment = this.reportTextOnMyAd;
+    report.vehicleId = this.myAdReportVehicleId;
+    report.km = this.kilometers;
+    this.myProfileService.sendAgentReport(report).subscribe();
+    this.reportTextOnMyAd = '';
+    this.myAdReportVehicleId = -1;
+    this.kilometers = 0;
   }
 
   public openReportBoxOnMyAd(vehicleId: number){
